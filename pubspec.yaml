@@ -1,0 +1,35 @@
+name: meet_sam_ava
+description: MVVM starter using Flutter + Riverpod 3 + AutoRoute + Formz, with riverpod_lint + custom_lint.
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: ">=3.24.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Riverpod 3 (dev line)
+  flutter_riverpod: ^3.0.0-dev.17
+  riverpod_annotation: ^3.0.0-dev.17
+
+  # Routing
+  auto_route: ^10.1.2
+
+  # Forms & validation
+  formz: ^0.8.0
+  dartz: ^0.10.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # Codegen
+  build_runner: ^2.4.11
+  riverpod_generator: ^3.0.0-dev.17
+  auto_route_generator: ^10.2.4
+
+  riverpod_lint: ^3.0.0-dev.17
+  flutter_lints: ^6.0.0
