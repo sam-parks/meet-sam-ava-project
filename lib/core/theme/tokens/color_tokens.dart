@@ -8,7 +8,7 @@ class ColorTokens {
   static const Color primaryDark = Color(0xFF420085);
   
   static const Color secondary = Color(0xFF48A388);
-  static const Color secondaryLight = Color(0xFF6FBAA2);
+  static const Color secondaryLight = Color(0xFFA9EACE);
   static const Color secondaryDark = Color(0xFF2E6B57);
   
   static const Color success = Color(0xFF4CAF50);

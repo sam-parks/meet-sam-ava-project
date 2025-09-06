@@ -8,15 +8,21 @@ void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends ConsumerWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends ConsumerState<MyApp> {
+  final AppRouter router = AppRouter();
+
+  @override
+  Widget build(BuildContext context) {
     final themeMode = ref.watch(themeModeNotifierProvider);
     final lightTheme = ref.watch(lightThemeProvider);
     final darkTheme = ref.watch(darkThemeProvider);
-    final router = AppRouter();
 
     return MaterialApp.router(
       title: 'MVVM + Riverpod 3 + AutoRoute + Formz',

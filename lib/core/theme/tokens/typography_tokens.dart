@@ -4,7 +4,7 @@ class TypographyTokens {
   TypographyTokens._();
 
   static const String fontFamily = 'At Hauss';
-  static const String fontFamilyMono = 'SF Mono';
+  static const String fontFamilyCondensed = 'At Slam Cnd';
 
   static const TextStyle displayLarge = TextStyle(
     fontSize: 57,
@@ -14,7 +14,7 @@ class TypographyTokens {
   );
 
   static const TextStyle displayMedium = TextStyle(
-    fontSize: 45,
+    fontSize: 40,
     fontWeight: FontWeight.w400,
     letterSpacing: 0,
     height: 1.16,
@@ -92,21 +92,21 @@ class TypographyTokens {
 
   static const TextStyle labelLarge = TextStyle(
     fontSize: 14,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w600,
     letterSpacing: 0.1,
     height: 1.43,
   );
 
   static const TextStyle labelMedium = TextStyle(
     fontSize: 12,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w600,
     letterSpacing: 0.5,
     height: 1.33,
   );
 
   static const TextStyle labelSmall = TextStyle(
     fontSize: 11,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w600,
     letterSpacing: 0.5,
     height: 1.45,
   );
@@ -144,5 +144,21 @@ class TypographyTokens {
     fontWeight: FontWeight.w500,
     letterSpacing: 1.5,
     height: 1.6,
+  );
+
+  // Condensed font styles for specific use cases
+  static const TextStyle displayLargeCondensed = TextStyle(
+    fontSize: 40,
+    fontWeight: FontWeight.w400,
+    letterSpacing: -0.25,
+    height: 1.12,
+    fontFamily: fontFamilyCondensed,
+  );
+
+  static const TextStyle headlineLargeCondensed = TextStyle(
+    fontSize: 50,
+    fontWeight: FontWeight.bold,
+    height: 1.1,
+    fontFamily: fontFamilyCondensed,
   );
 }

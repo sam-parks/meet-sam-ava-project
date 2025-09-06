@@ -27,22 +27,6 @@ class EmploymentInfoRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [EmploymentInfoUnifiedPage]
-class EmploymentInfoUnifiedRoute extends PageRouteInfo<void> {
-  const EmploymentInfoUnifiedRoute({List<PageRouteInfo>? children})
-      : super(EmploymentInfoUnifiedRoute.name, initialChildren: children);
-
-  static const String name = 'EmploymentInfoUnifiedRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const EmploymentInfoUnifiedPage();
-    },
-  );
-}
-
-/// generated route for
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meet_sam_ava/features/home/model/credit_score_model.dart';
 import 'package:meet_sam_ava/core/theme/tokens/spacing_tokens.dart';
+import 'package:meet_sam_ava/shared/widgets/credit_score_info.dart';
+import 'package:meet_sam_ava/shared/widgets/animated_credit_score_line_chart.dart';
 
 class CreditScoreChartCard extends StatelessWidget {
   final CreditScore creditScore;
@@ -37,76 +39,19 @@ class CreditScoreChartCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      'Credit Score',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const SizedBox(width: SpacingTokens.space2),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: SpacingTokens.space2,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.secondaryContainer,
-                        borderRadius: BorderRadius.circular(RadiusTokens.xxxl),
-                      ),
-                      child: Text(
-                        creditScore.status,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium
-                            ?.copyWith(
-                              color: Theme.of(context).colorScheme.onSecondary,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: SpacingTokens.space1),
-                Text(
-                  'Updated Today • Next May 12',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                ),
-                const SizedBox(height: SpacingTokens.space3),
-                Text(
-                  creditScore.provider,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.primaryContainer,
-                        fontWeight: FontWeight.w600,
-                      ),
+                CreditScoreInfo(
+                  title: 'Credit Score',
+                  badgeText: creditScore.change,
+                  subtitle:
+                      '${creditScore.lastUpdated} | Next ${creditScore.nextUpdate}',
+                  provider: creditScore.provider,
+                  titleStyle: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: SpacingTokens.space4),
-                // Placeholder for chart - you can integrate a charting library here
-                Container(
+                // Animated credit score line chart
+                AnimatedCreditScoreLineChart(
+                  chartData: creditScoreChart,
                   height: 100,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color:
-                        Theme.of(context).colorScheme.surfaceContainerHighest,
-                    borderRadius: BorderRadius.circular(RadiusTokens.sm),
-                  ),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.show_chart,
-                          size: 32,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        const SizedBox(height: SpacingTokens.space2),
-                        Text(
-                          'Credit Score Chart',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      ],
-                    ),
-                  ),
                 ),
                 const SizedBox(height: SpacingTokens.space2),
                 SizedBox(

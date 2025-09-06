@@ -9,7 +9,8 @@ class MockCreditScoreRepository implements ICreditScoreRepository {
 
     return right(const CreditScore(
       score: 720,
-      status: '+2pts',
+      change: '+2pts',
+      status: 'Good',
       lastUpdated: 'Updated Today',
       nextUpdate: 'Next May 12',
       provider: 'Experian',
@@ -36,10 +37,17 @@ class MockCreditScoreRepository implements ICreditScoreRepository {
       CreditScoreDataPoint(date: DateTime.now(), score: 720),
     ];
 
+    // Calculate min and max from data points
+    final scores = dataPoints.map((point) => point.score).toList();
+    final minScore = scores.reduce((a, b) => a < b ? a : b).toDouble();
+    final maxScore = scores.reduce((a, b) => a > b ? a : b).toDouble();
+
     return right(CreditScoreChart(
       dataPoints: dataPoints,
       period: 'Last 12 months',
       calculationMethod: 'Score calculated using VantageScore 3.0',
+      minY: minScore,
+      maxY: maxScore,
     ));
   }
 

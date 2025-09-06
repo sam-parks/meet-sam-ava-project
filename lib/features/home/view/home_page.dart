@@ -102,7 +102,8 @@ class _CreditScoreHeaderDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => 160;
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
