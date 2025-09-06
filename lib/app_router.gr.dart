@@ -11,22 +11,6 @@
 part of 'app_router.dart';
 
 /// generated route for
-/// [EmploymentEditPage]
-class EmploymentEditRoute extends PageRouteInfo<void> {
-  const EmploymentEditRoute({List<PageRouteInfo>? children})
-      : super(EmploymentEditRoute.name, initialChildren: children);
-
-  static const String name = 'EmploymentEditRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const EmploymentEditPage();
-    },
-  );
-}
-
-/// generated route for
 /// [EmploymentInfoPage]
 class EmploymentInfoRoute extends PageRouteInfo<void> {
   const EmploymentInfoRoute({List<PageRouteInfo>? children})
@@ -38,6 +22,22 @@ class EmploymentInfoRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const EmploymentInfoPage();
+    },
+  );
+}
+
+/// generated route for
+/// [EmploymentInfoUnifiedPage]
+class EmploymentInfoUnifiedRoute extends PageRouteInfo<void> {
+  const EmploymentInfoUnifiedRoute({List<PageRouteInfo>? children})
+      : super(EmploymentInfoUnifiedRoute.name, initialChildren: children);
+
+  static const String name = 'EmploymentInfoUnifiedRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const EmploymentInfoUnifiedPage();
     },
   );
 }
