@@ -1,4 +1,29 @@
-enum CreditFactorImpact { high, medium, low }
+import 'dart:ui';
+
+import 'package:meet_sam_ava/core/theme/tokens/color_tokens.dart';
+
+enum CreditFactorImpact {
+  high('HIGH IMPACT'),
+  medium('MEDIUM IMPACT'),
+  low('LOW IMPACT');
+
+  final String label;
+
+  const CreditFactorImpact(this.label);
+}
+
+extension CreditFactorImpactExtension on CreditFactorImpact {
+  Color get color {
+    switch (this) {
+      case CreditFactorImpact.high:
+        return ColorTokens.secondaryDark;
+      case CreditFactorImpact.medium:
+        return ColorTokens.secondary;
+      case CreditFactorImpact.low:
+        return ColorTokens.secondaryLight;
+    }
+  }
+}
 
 class CreditFactor {
   final String name;

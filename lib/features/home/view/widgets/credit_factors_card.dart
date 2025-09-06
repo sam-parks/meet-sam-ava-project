@@ -27,15 +27,16 @@ class CreditFactorsCard extends StatelessWidget {
           ),
         ),
         const SizedBox(height: SpacingTokens.space4),
-        Row(
-          children: factors.map((factor) {
-            return Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(right: SpacingTokens.space3),
-                child: CreditFactorItem(factor: factor),
-              ),
-            );
-          }).toList(),
+        SizedBox(
+          height: 180,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: factors.length,
+            itemExtent: 144,
+            itemBuilder: (context, index) {
+              return CreditFactorItem(factor: factors[index]);
+            },
+          ),
         ),
       ],
     );
@@ -52,20 +53,28 @@ class CreditFactorItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final impactColor = _getImpactColor(context, factor.impact);
-    final impactLabel = _getImpactLabel(factor.impact);
+    final impactColor = factor.impact.color;
+    final impactLabel = factor.impact.label;
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(SpacingTokens.space3),
+        padding: const EdgeInsets.symmetric(
+          vertical: SpacingTokens.space6,
+          horizontal: SpacingTokens.space2,
+        ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              factor.name,
-              style: Theme.of(context).textTheme.labelMedium,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+            SizedBox(
+              height: 36,
+              width: double.infinity,
+              child: Text(
+                factor.name,
+                style: Theme.of(context).textTheme.labelMedium,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+              ),
             ),
             const SizedBox(height: SpacingTokens.space2),
             Text(
@@ -74,15 +83,15 @@ class CreditFactorItem extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
             ),
-            const SizedBox(height: SpacingTokens.space2),
+            const Spacer(),
             Container(
               padding: const EdgeInsets.symmetric(
-                horizontal: SpacingTokens.space2,
+                horizontal: SpacingTokens.space3,
                 vertical: SpacingTokens.space1,
               ),
               decoration: BoxDecoration(
                 color: impactColor,
-                borderRadius: BorderRadius.circular(RadiusTokens.sm),
+                borderRadius: BorderRadius.circular(RadiusTokens.xs),
               ),
               child: Text(
                 impactLabel,
@@ -96,27 +105,5 @@ class CreditFactorItem extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Color _getImpactColor(BuildContext context, CreditFactorImpact impact) {
-    switch (impact) {
-      case CreditFactorImpact.high:
-        return Colors.red.shade700;
-      case CreditFactorImpact.medium:
-        return Colors.orange.shade600;
-      case CreditFactorImpact.low:
-        return Theme.of(context).colorScheme.secondary;
-    }
-  }
-
-  String _getImpactLabel(CreditFactorImpact impact) {
-    switch (impact) {
-      case CreditFactorImpact.high:
-        return 'HIGH IMPACT';
-      case CreditFactorImpact.medium:
-        return 'MED IMPACT';
-      case CreditFactorImpact.low:
-        return 'LOW IMPACT';
-    }
   }
 }
