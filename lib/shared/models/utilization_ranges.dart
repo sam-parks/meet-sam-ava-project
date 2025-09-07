@@ -21,4 +21,14 @@ class UtilizationRange {
     UtilizationRange(range: '50-74%', isActive: false),
     UtilizationRange(range: '>75%', isActive: false),
   ];
+  
+  static List<UtilizationRange> getRangesForPercentage(double percentage) {
+    return [
+      UtilizationRange(range: '0-9%', isActive: percentage <= 9),
+      UtilizationRange(range: '10-29%', isActive: percentage > 9 && percentage <= 29),
+      UtilizationRange(range: '30-49%', isActive: percentage > 29 && percentage <= 49),
+      UtilizationRange(range: '50-74%', isActive: percentage > 49 && percentage <= 74),
+      UtilizationRange(range: '>75%', isActive: percentage > 74),
+    ];
+  }
 }

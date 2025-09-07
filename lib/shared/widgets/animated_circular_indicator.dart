@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:meet_sam_ava/core/theme/tokens/typography_tokens.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class AnimatedCircularIndicator extends StatefulWidget {
   final double value;
@@ -38,6 +39,7 @@ class _AnimatedCircularIndicatorState extends State<AnimatedCircularIndicator>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+  bool _hasAnimated = false;
 
   @override
   void initState() {
@@ -47,6 +49,10 @@ class _AnimatedCircularIndicatorState extends State<AnimatedCircularIndicator>
       vsync: this,
     );
     
+    _setupAnimation();
+  }
+  
+  void _setupAnimation() {
     final progress = widget.value / widget.maxValue;
     
     _animation = Tween<double>(
@@ -56,8 +62,13 @@ class _AnimatedCircularIndicatorState extends State<AnimatedCircularIndicator>
       parent: _controller,
       curve: Curves.easeInOut,
     ));
-    
-    _controller.forward();
+  }
+  
+  void _onVisibilityChanged(VisibilityInfo info) {
+    if (!_hasAnimated && info.visibleFraction > 0) {
+      _hasAnimated = true;
+      _controller.forward();
+    }
   }
 
   @override
@@ -70,27 +81,26 @@ class _AnimatedCircularIndicatorState extends State<AnimatedCircularIndicator>
   void didUpdateWidget(AnimatedCircularIndicator oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.value != widget.value || oldWidget.maxValue != widget.maxValue) {
-      final progress = widget.value / widget.maxValue;
-      _animation = Tween<double>(
-        begin: _animation.value,
-        end: progress,
-      ).animate(CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOut,
-      ));
-      _controller.forward(from: 0);
+      _controller.reset();
+      _setupAnimation();
+      if (_hasAnimated) {
+        _controller.forward();
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: widget.size,
-      height: widget.size,
-      child: AnimatedBuilder(
-        animation: _animation,
-        builder: (context, child) {
-          return CustomPaint(
+    return VisibilityDetector(
+      key: Key('animated-circular-indicator-${widget.hashCode}'),
+      onVisibilityChanged: _onVisibilityChanged,
+      child: SizedBox(
+        width: widget.size,
+        height: widget.size,
+        child: AnimatedBuilder(
+          animation: _animation,
+          builder: (context, child) {
+            return CustomPaint(
             painter: _CircleProgressPainter(
               progress: _animation.value,
               strokeWidth: widget.strokeWidth,
@@ -127,6 +137,7 @@ class _AnimatedCircularIndicatorState extends State<AnimatedCircularIndicator>
             ),
           );
         },
+        ),
       ),
     );
   }

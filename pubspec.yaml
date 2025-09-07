@@ -25,6 +25,9 @@ dependencies:
   # Charts
   fl_chart: ^0.69.0
   intl: ^0.20.2
+  
+  # Visibility detection for scroll-based animations
+  visibility_detector: ^0.4.0+2
 
 dev_dependencies:
   flutter_test:

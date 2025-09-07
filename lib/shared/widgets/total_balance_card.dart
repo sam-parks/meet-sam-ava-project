@@ -81,59 +81,96 @@ class TotalBalanceCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: SpacingTokens.space2),
-            Text(
-              ratingLabel,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: _getRatingColor(context, ratingLabel),
-                    fontWeight: FontWeight.w600,
-                  ),
-            ),
-            const SizedBox(height: SpacingTokens.space4),
             if (utilizationRanges.isNotEmpty) ...[
-              SizedBox(
-                height: 24,
-                child: Row(
-                  children: [
-                    // Green section (0-9% and 10-29%)
-                    Expanded(
-                      flex: 2,
-                      child: Container(
-                        height: 24,
-                        margin: const EdgeInsets.only(right: 1),
-                        decoration: BoxDecoration(
-                          color: _getSegmentColor(0, utilizationRanges),
-                          borderRadius: const BorderRadius.horizontal(
-                            left: Radius.circular(4),
+              Row(
+                children: [
+                  // Green section (0-29%)
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      children: [
+                        // Show rating label only if this range is active
+                        if (_isRangeActive(0, 29, utilizationPercentage))
+                          Text(
+                            ratingLabel,
+                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                  color: _getRatingColor(context, ratingLabel),
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          )
+                        else
+                          const SizedBox(height: 20),
+                        const SizedBox(height: SpacingTokens.space2),
+                        Container(
+                          height: 24,
+                          margin: const EdgeInsets.only(right: 1),
+                          decoration: BoxDecoration(
+                            color: _getSegmentColor(0, utilizationRanges),
+                            borderRadius: const BorderRadius.horizontal(
+                              left: Radius.circular(4),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                    // Peach section (30-49%)
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        height: 24,
-                        margin: const EdgeInsets.only(right: 1),
-                        decoration: BoxDecoration(
-                          color: _getSegmentColor(2, utilizationRanges),
-                        ),
-                      ),
-                    ),
-                    // Pink section (50-74% and <75%)
-                    Expanded(
-                      flex: 2,
-                      child: Container(
-                        height: 24,
-                        decoration: BoxDecoration(
-                          color: _getSegmentColor(3, utilizationRanges),
-                          borderRadius: const BorderRadius.horizontal(
-                            right: Radius.circular(4),
+                  ),
+                  // Peach section (30-49%)
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      children: [
+                        // Show rating label only if this range is active
+                        if (_isRangeActive(30, 49, utilizationPercentage))
+                          Text(
+                            ratingLabel,
+                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                  color: _getRatingColor(context, ratingLabel),
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          )
+                        else
+                          const SizedBox(height: 20),
+                        const SizedBox(height: SpacingTokens.space2),
+                        Container(
+                          height: 24,
+                          margin: const EdgeInsets.only(right: 1),
+                          decoration: BoxDecoration(
+                            color: _getSegmentColor(2, utilizationRanges),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  // Pink section (50%+)
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      children: [
+                        // Show rating label only if this range is active
+                        if (_isRangeActive(50, 100, utilizationPercentage))
+                          Text(
+                            ratingLabel,
+                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                  color: _getRatingColor(context, ratingLabel),
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          )
+                        else
+                          const SizedBox(height: 20),
+                        const SizedBox(height: SpacingTokens.space2),
+                        Container(
+                          height: 24,
+                          decoration: BoxDecoration(
+                            color: _getSegmentColor(3, utilizationRanges),
+                            borderRadius: const BorderRadius.horizontal(
+                              right: Radius.circular(4),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: SpacingTokens.space2),
               Row(
@@ -184,6 +221,10 @@ class TotalBalanceCard extends StatelessWidget {
     }
 
     final barColor = UtilizationRating.getBarColor(segmentIndex);
-    return isActive ? barColor : barColor.withValues(alpha: 0.3);
+    return isActive ? barColor : barColor;
+  }
+
+  bool _isRangeActive(double min, double max, double percentage) {
+    return percentage >= min && percentage <= max;
   }
 }

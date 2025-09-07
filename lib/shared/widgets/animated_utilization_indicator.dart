@@ -32,8 +32,8 @@ class AnimatedUtilizationIndicator extends StatelessWidget {
       subText: statusLabel,
       size: size,
       strokeWidth: strokeWidth,
-      progressColor: Theme.of(context).colorScheme.secondary, // Dark green
-      backgroundColor: Theme.of(context).colorScheme.secondaryContainer, // Light green
+      progressColor: visualColor, // Dark green
+      backgroundColor: visualColor.withValues(alpha: 0.3), // Light green
       animationDuration: animationDuration,
       subTextStyle: Theme.of(context).textTheme.labelSmall?.copyWith(
         color: visualColor,

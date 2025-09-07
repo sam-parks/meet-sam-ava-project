@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meet_sam_ava/core/theme/tokens/color_tokens.dart';
 
 enum UtilizationRating {
   excellent(
@@ -57,14 +58,14 @@ enum UtilizationRating {
     switch (index) {
       case 0: // 0-9%
       case 1: // 10-29%
-        return const Color(0xFF5DB075); // Green
+        return ColorTokens.secondary;
       case 2: // 30-49%
-        return const Color(0xFFFF7E17); // Peach
+        return const Color(0xFFFF7E17).withAlpha(70); // Peach
       case 3: // 50-74%
       case 4: // <75%
-        return const Color(0xFFDD1338); // Pink
+        return const Color(0xFFDD1338).withAlpha(70); // Pink
       default:
-        return const Color(0xFF5DB075);
+        return ColorTokens.secondary;
     }
   }
 }

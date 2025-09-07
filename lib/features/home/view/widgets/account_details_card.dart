@@ -41,6 +41,7 @@ class AccountDetailsCard extends StatelessWidget {
                   maxValue: accountDetails.spendLimitValue,
                   currentValueLabel: '\$${accountDetails.currentSpend.toInt()}',
                   maxValueLabel: accountDetails.spendLimit,
+                  backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
                 ),
                 const SizedBox(height: SpacingTokens.space5),
                 // Balance and Credit Limit
@@ -52,17 +53,15 @@ class AccountDetailsCard extends StatelessWidget {
                       children: [
                         Text(
                           accountDetails.balance,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
                         ),
                         Text(
                           'Balance',
                           style:
-                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     color: Theme.of(context)
                                         .colorScheme
                                         .onSurfaceVariant,
@@ -75,17 +74,15 @@ class AccountDetailsCard extends StatelessWidget {
                       children: [
                         Text(
                           accountDetails.creditLimit,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
                         ),
                         Text(
                           'Credit limit',
                           style:
-                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     color: Theme.of(context)
                                         .colorScheme
                                         .onSurfaceVariant,
@@ -95,17 +92,23 @@ class AccountDetailsCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: SpacingTokens.space4),
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                    vertical: SpacingTokens.space3,
+                  ),
+                  height: 1,
+                  color: Theme.of(context).colorScheme.outline,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'Utilization',
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Text(
-                      utilizationPercentage.toString(),
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      '$utilizationPercentage%',
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.w600,
                           ),
                     ),
@@ -122,7 +125,8 @@ class AccountDetailsCard extends StatelessWidget {
           totalLimit: accountDetails.totalLimit,
           ratingLabel: accountDetails.ratingLabel,
           utilizationPercentage: utilizationPercentage,
-          utilizationRanges: UtilizationRange.defaultRanges,
+          utilizationRanges:
+              UtilizationRange.getRangesForPercentage(utilizationPercentage),
         ),
       ],
     );
