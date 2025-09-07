@@ -34,7 +34,10 @@ class HomeContentWidget extends StatelessWidget {
 
         // Account details section
         if (homeState.accountDetails != null)
-          AccountDetailsCard(accountDetails: homeState.accountDetails),
+          AccountDetailsCard(
+            accountDetails: homeState.accountDetails!,
+            utilizationPercentage: homeState.utilizationPercentage,
+          ),
         const SizedBox(height: SpacingTokens.space8),
 
         // Credit card accounts section

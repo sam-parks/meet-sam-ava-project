@@ -1,71 +1,67 @@
+import 'package:intl/intl.dart';
+
 class AccountDetails {
-  final String spendLimit;
-  final String balance;
-  final String creditLimit;
-  final String utilizationPercentage;
-  final String totalBalance;
-  final String totalLimit;
+  final double spendLimitValue;
+  final double balanceValue;
+  final double creditLimitValue;
+  final double totalBalanceValue;
+  final double totalLimitValue;
+  final double currentSpend;
   final String ratingLabel;
-  final List<UtilizationRange> utilizationRanges;
+  final String currency;
 
   const AccountDetails({
-    required this.spendLimit,
-    required this.balance,
-    required this.creditLimit,
-    required this.utilizationPercentage,
-    required this.totalBalance,
-    required this.totalLimit,
+    required this.spendLimitValue,
+    required this.balanceValue,
+    required this.creditLimitValue,
+    required this.totalBalanceValue,
+    required this.totalLimitValue,
+    required this.currentSpend,
     required this.ratingLabel,
-    required this.utilizationRanges,
+    this.currency = '\$',
   });
 
+  // Currency formatted getters
+  String get spendLimit => _formatCurrency(spendLimitValue);
+  String get balance => _formatCurrency(balanceValue);
+  String get creditLimit => _formatCurrency(creditLimitValue);
+  String get totalBalance => _formatCurrency(totalBalanceValue);
+  String get totalLimit => _formatCurrency(totalLimitValue);
+
+  String _formatCurrency(double value) {
+    final formatter = NumberFormat.currency(symbol: currency, decimalDigits: 0);
+    return formatter.format(value);
+  }
+
   factory AccountDetails.empty() => const AccountDetails(
-        spendLimit: '',
-        balance: '',
-        creditLimit: '',
-        utilizationPercentage: '',
-        totalBalance: '',
-        totalLimit: '',
+        spendLimitValue: 0.0,
+        balanceValue: 0.0,
+        creditLimitValue: 0.0,
+        totalBalanceValue: 0.0,
+        totalLimitValue: 0.0,
+        currentSpend: 0.0,
         ratingLabel: '',
-        utilizationRanges: [],
       );
 
   AccountDetails copyWith({
-    String? spendLimit,
-    String? balance,
-    String? creditLimit,
-    String? utilizationPercentage,
-    String? totalBalance,
-    String? totalLimit,
+    double? spendLimitValue,
+    double? balanceValue,
+    double? creditLimitValue,
+    double? totalBalanceValue,
+    double? totalLimitValue,
+    double? currentSpend,
     String? ratingLabel,
-    List<UtilizationRange>? utilizationRanges,
+    String? currency,
   }) {
     return AccountDetails(
-      spendLimit: spendLimit ?? this.spendLimit,
-      balance: balance ?? this.balance,
-      creditLimit: creditLimit ?? this.creditLimit,
-      utilizationPercentage: utilizationPercentage ?? this.utilizationPercentage,
-      totalBalance: totalBalance ?? this.totalBalance,
-      totalLimit: totalLimit ?? this.totalLimit,
+      spendLimitValue: spendLimitValue ?? this.spendLimitValue,
+      balanceValue: balanceValue ?? this.balanceValue,
+      creditLimitValue: creditLimitValue ?? this.creditLimitValue,
+      totalBalanceValue: totalBalanceValue ?? this.totalBalanceValue,
+      totalLimitValue: totalLimitValue ?? this.totalLimitValue,
+      currentSpend: currentSpend ?? this.currentSpend,
       ratingLabel: ratingLabel ?? this.ratingLabel,
-      utilizationRanges: utilizationRanges ?? this.utilizationRanges,
-    );
-  }
-}
-
-class UtilizationRange {
-  final String range;
-  final bool isActive;
-
-  const UtilizationRange({
-    required this.range,
-    required this.isActive,
-  });
-
-  UtilizationRange copyWith({String? range, bool? isActive}) {
-    return UtilizationRange(
-      range: range ?? this.range,
-      isActive: isActive ?? this.isActive,
+      currency: currency ?? this.currency,
     );
   }
 }

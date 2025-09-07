@@ -53,8 +53,9 @@ class CreditFactorItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final impactColor = factor.impact.color;
+    final impactColor = factor.impact.backgroundColor;
     final impactLabel = factor.impact.label;
+    final impactTextColor = factor.impact.textColor;
 
     return Card(
       child: Padding(
@@ -96,7 +97,7 @@ class CreditFactorItem extends StatelessWidget {
               child: Text(
                 impactLabel,
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: Colors.white,
+                      color: impactTextColor,
                       fontWeight: FontWeight.w600,
                     ),
               ),

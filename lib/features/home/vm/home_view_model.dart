@@ -24,6 +24,16 @@ class HomeState {
     this.errorMessage,
   });
 
+  double get utilizationPercentage {
+    if (accountDetails == null) return 0.0;
+    if (accountDetails!.totalLimitValue <= 0) return 0.0;
+
+    final percentage =
+        (accountDetails!.totalBalanceValue / accountDetails!.totalLimitValue) *
+            100;
+    return percentage.clamp(0.0, 100.0).roundToDouble();
+  }
+
   HomeState copyWith({
     CreditScore? creditScore,
     CreditScoreChart? creditScoreChart,

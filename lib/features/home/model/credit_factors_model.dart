@@ -13,7 +13,7 @@ enum CreditFactorImpact {
 }
 
 extension CreditFactorImpactExtension on CreditFactorImpact {
-  Color get color {
+  Color get backgroundColor {
     switch (this) {
       case CreditFactorImpact.high:
         return ColorTokens.secondaryDark;
@@ -21,6 +21,17 @@ extension CreditFactorImpactExtension on CreditFactorImpact {
         return ColorTokens.secondary;
       case CreditFactorImpact.low:
         return ColorTokens.secondaryLight;
+    }
+  }
+
+  Color get textColor {
+    switch (this) {
+      case CreditFactorImpact.high:
+        return ColorTokens.textOnSecondaryDark;
+      case CreditFactorImpact.medium:
+        return ColorTokens.textOnSecondaryDark;
+      case CreditFactorImpact.low:
+        return ColorTokens.textOnSecondaryLight;
     }
   }
 }
