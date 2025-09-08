@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # Riverpod 3 
+  # Riverpod 3
   flutter_riverpod: ^3.0.0-dev.17
   riverpod_annotation: ^3.0.0-dev.17
 
@@ -25,10 +25,10 @@ dependencies:
   # Charts
   fl_chart: ^0.69.0
   intl: ^0.20.2
-  
+
   # Visibility detection for scroll-based animations
   visibility_detector: ^0.4.0+2
-  
+
   # Persistent storage
   shared_preferences: ^2.2.2
 
@@ -43,10 +43,20 @@ dev_dependencies:
 
   riverpod_lint: ^3.0.0-dev.17
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  image_path: "assets/icons/sam_app_icon_512.png"
+  ios: true
+  remove_alpha_ios: true
+  web:
+    generate: true
+    image_path: "assets/icons/sam_app_icon_512.png"
+    background_color: "#FFF2F0ED"
 
 flutter:
   uses-material-design: true
-  
+
   fonts:
     - family: At Hauss
       fonts:
@@ -58,7 +68,7 @@ flutter:
           weight: 600
         - asset: assets/fonts/AtHauss-Bold.ttf
           weight: 700
-    
+
     - family: At Slam Cnd
       fonts:
         - asset: assets/fonts/AtSlamCnd-Regular.ttf
