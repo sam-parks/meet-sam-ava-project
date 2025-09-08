@@ -93,7 +93,10 @@ class TotalBalanceCard extends StatelessWidget {
                         if (_isRangeActive(0, 29, utilizationPercentage))
                           Text(
                             ratingLabel,
-                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall
+                                ?.copyWith(
                                   color: _getRatingColor(context, ratingLabel),
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -123,7 +126,10 @@ class TotalBalanceCard extends StatelessWidget {
                         if (_isRangeActive(30, 49, utilizationPercentage))
                           Text(
                             ratingLabel,
-                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall
+                                ?.copyWith(
                                   color: _getRatingColor(context, ratingLabel),
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -150,7 +156,10 @@ class TotalBalanceCard extends StatelessWidget {
                         if (_isRangeActive(50, 100, utilizationPercentage))
                           Text(
                             ratingLabel,
-                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall
+                                ?.copyWith(
                                   color: _getRatingColor(context, ratingLabel),
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -175,11 +184,25 @@ class TotalBalanceCard extends StatelessWidget {
               const SizedBox(height: SpacingTokens.space2),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: utilizationRanges.map((range) {
+                children: utilizationRanges.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final range = entry.value;
+                  final isActive = range.isActive;
+
+                  // Get the appropriate color for this range
+                  Color rangeColor;
+                  if (isActive) {
+                    rangeColor = UtilizationRating.getBarColor(index);
+                  } else {
+                    rangeColor = Theme.of(context).colorScheme.onSurfaceVariant;
+                  }
+
                   return Text(
                     range.range,
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                          color: rangeColor,
+                          fontWeight:
+                              isActive ? FontWeight.w600 : FontWeight.normal,
                         ),
                   );
                 }).toList(),
@@ -204,24 +227,7 @@ class TotalBalanceCard extends StatelessWidget {
   }
 
   Color _getSegmentColor(int segmentIndex, List<UtilizationRange> ranges) {
-    // Check if any of the ranges in this segment are active
-    bool isActive = false;
-
-    if (segmentIndex == 0) {
-      // Green segment (ranges 0-1: 0-9% and 10-29%)
-      isActive = (ranges.isNotEmpty && ranges[0].isActive) ||
-          (ranges.length > 1 && ranges[1].isActive);
-    } else if (segmentIndex == 2) {
-      // Peach segment (range 2: 30-49%)
-      isActive = ranges.length > 2 && ranges[2].isActive;
-    } else if (segmentIndex == 3) {
-      // Pink segment (ranges 3-4: 50-74% and <75%)
-      isActive = (ranges.length > 3 && ranges[3].isActive) ||
-          (ranges.length > 4 && ranges[4].isActive);
-    }
-
-    final barColor = UtilizationRating.getBarColor(segmentIndex);
-    return isActive ? barColor : barColor;
+    return UtilizationRating.getBarColor(segmentIndex);
   }
 
   bool _isRangeActive(double min, double max, double percentage) {

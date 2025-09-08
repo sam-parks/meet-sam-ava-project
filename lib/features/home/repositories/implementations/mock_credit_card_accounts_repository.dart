@@ -10,24 +10,21 @@ class MockCreditCardAccountsRepository implements ICreditCardAccountsRepository 
     final accounts = [
       const CreditCardAccount(
         provider: 'Syncb/Amazon',
-        utilizationPercentage: '21%',
-        balance: '\$1,500 Balance',
-        creditLimit: '\$6,500 Limit',
-        reportedDate: 'Reported on June 30, 2023',
+        balanceValue: 1500.0,
+        creditLimitValue: 6300.0,
+        reportedDate: 'Reported on June 20, 2023',
       ),
       const CreditCardAccount(
-        provider: 'Syncb/Amazon',
-        utilizationPercentage: '21%',
-        balance: '\$1,500 Balance',
-        creditLimit: '\$6,500 Limit',
-        reportedDate: 'Reported on June 30, 2023',
+        provider: 'Chase Freedom',
+        balanceValue: 850.0,
+        creditLimitValue: 5000.0,
+        reportedDate: 'Reported on June 18, 2023',
       ),
       const CreditCardAccount(
-        provider: 'Syncb/Amazon',
-        utilizationPercentage: '21%',
-        balance: '\$1,500 Balance',
-        creditLimit: '\$6,500 Limit',
-        reportedDate: 'Reported on June 30, 2023',
+        provider: 'Discover it',
+        balanceValue: 320.0,
+        creditLimitValue: 2500.0,
+        reportedDate: 'Reported on June 22, 2023',
       ),
     ];
 

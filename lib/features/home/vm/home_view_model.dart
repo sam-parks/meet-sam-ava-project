@@ -1,4 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:dartz/dartz.dart';
+import 'package:meet_sam_ava/core/failures/failure.dart';
 import 'package:meet_sam_ava/features/home/model/credit_score_model.dart';
 import 'package:meet_sam_ava/features/home/model/credit_factors_model.dart';
 import 'package:meet_sam_ava/features/home/model/account_details_model.dart';
@@ -8,39 +10,52 @@ import 'package:meet_sam_ava/features/home/repositories/providers/repository_pro
 part 'home_view_model.g.dart';
 
 class HomeState {
-  final CreditScore? creditScore;
-  final CreditScoreChart? creditScoreChart;
-  final CreditFactors? creditFactors;
-  final AccountDetails? accountDetails;
-  final CreditCardAccounts? creditCardAccounts;
-  final String? errorMessage;
+  final Either<Failure, CreditScore> creditScore;
+  final Either<Failure, CreditScoreChart> creditScoreChart;
+  final Either<Failure, CreditFactors> creditFactors;
+  final Either<Failure, AccountDetails> accountDetails;
+  final Either<Failure, CreditCardAccounts> creditCardAccounts;
 
   const HomeState({
-    this.creditScore,
-    this.creditScoreChart,
-    this.creditFactors,
-    this.accountDetails,
-    this.creditCardAccounts,
-    this.errorMessage,
+    required this.creditScore,
+    required this.creditScoreChart,
+    required this.creditFactors,
+    required this.accountDetails,
+    required this.creditCardAccounts,
   });
 
-  double get utilizationPercentage {
-    if (accountDetails == null) return 0.0;
-    if (accountDetails!.totalLimitValue <= 0) return 0.0;
+  // Clean initial state
+  factory HomeState.initial() => HomeState(
+        creditScore: left(const NotInitializedFailure(
+            message: 'Not initialized credit score...')),
+        creditScoreChart: left(const NotInitializedFailure(
+            message: 'Not initialized credit history...')),
+        creditFactors: left(const NotInitializedFailure(
+            message: 'Not initialized credit factors...')),
+        accountDetails: left(const NotInitializedFailure(
+            message: 'Not initialized account details...')),
+        creditCardAccounts: left(const NotInitializedFailure(
+            message: 'Not initialized credit cards...')),
+      );
 
-    final percentage =
-        (accountDetails!.totalBalanceValue / accountDetails!.totalLimitValue) *
-            100;
-    return percentage.clamp(0.0, 100.0).roundToDouble();
+  double get utilizationPercentage {
+    return accountDetails.fold(
+      (failure) => 0.0,
+      (details) {
+        if (details.totalLimitValue <= 0) return 0.0;
+        final percentage =
+            (details.totalBalanceValue / details.totalLimitValue) * 100;
+        return percentage.clamp(0.0, 100.0).roundToDouble();
+      },
+    );
   }
 
   HomeState copyWith({
-    CreditScore? creditScore,
-    CreditScoreChart? creditScoreChart,
-    CreditFactors? creditFactors,
-    AccountDetails? accountDetails,
-    CreditCardAccounts? creditCardAccounts,
-    String? errorMessage,
+    Either<Failure, CreditScore>? creditScore,
+    Either<Failure, CreditScoreChart>? creditScoreChart,
+    Either<Failure, CreditFactors>? creditFactors,
+    Either<Failure, AccountDetails>? accountDetails,
+    Either<Failure, CreditCardAccounts>? creditCardAccounts,
   }) {
     return HomeState(
       creditScore: creditScore ?? this.creditScore,
@@ -48,71 +63,53 @@ class HomeState {
       creditFactors: creditFactors ?? this.creditFactors,
       accountDetails: accountDetails ?? this.accountDetails,
       creditCardAccounts: creditCardAccounts ?? this.creditCardAccounts,
-      errorMessage: errorMessage ?? this.errorMessage,
     );
   }
 }
 
 @Riverpod(keepAlive: true)
 class HomeViewModel extends _$HomeViewModel {
-  final defaultState = const HomeState();
-
   @override
   FutureOr<HomeState> build() async {
     return loadData();
   }
 
   FutureOr<HomeState> loadData() async {
-    try {
-      final results = await Future.wait([
-        ref.read(creditScoreRepositoryProvider).getCreditScore(),
-        ref.read(creditScoreRepositoryProvider).getCreditScoreChart(),
-        ref.read(creditFactorsRepositoryProvider).getCreditFactors(),
-        ref.read(accountDetailsRepositoryProvider).getAccountDetails(),
-        ref.read(creditCardAccountsRepositoryProvider).getCreditCardAccounts(),
-      ]);
+    final results = await Future.wait([
+      ref.read(creditScoreRepositoryProvider).getCreditScore(),
+      ref.read(creditScoreRepositoryProvider).getCreditScoreChart(),
+      ref.read(creditFactorsRepositoryProvider).getCreditFactors(),
+      ref.read(accountDetailsRepositoryProvider).getAccountDetails(),
+      ref.read(creditCardAccountsRepositoryProvider).getCreditCardAccounts(),
+    ]);
 
-      CreditScore? creditScore;
-      CreditScoreChart? creditScoreChart;
-      CreditFactors? creditFactors;
-      AccountDetails? accountDetails;
-      CreditCardAccounts? creditCardAccounts;
-
-      results[0].fold(
-        (error) => throw Exception('Credit score error: $error'),
-        (data) => creditScore = data as CreditScore,
-      );
-
-      results[1].fold(
-        (error) => throw Exception('Credit score chart error: $error'),
-        (data) => creditScoreChart = data as CreditScoreChart,
-      );
-
-      results[2].fold(
-        (error) => throw Exception('Credit factors error: $error'),
-        (data) => creditFactors = data as CreditFactors,
-      );
-
-      results[3].fold(
-        (error) => throw Exception('Account details error: $error'),
-        (data) => accountDetails = data as AccountDetails,
-      );
-
-      results[4].fold(
-        (error) => throw Exception('Credit card accounts error: $error'),
-        (data) => creditCardAccounts = data as CreditCardAccounts,
-      );
-
-      return defaultState.copyWith(
-        creditScore: creditScore,
-        creditScoreChart: creditScoreChart,
-        creditFactors: creditFactors,
-        accountDetails: accountDetails,
-        creditCardAccounts: creditCardAccounts,
-      );
-    } catch (e) {
-      return defaultState.copyWith(errorMessage: e.toString());
-    }
+    return HomeState(
+      creditScore: results[0].fold(
+        (error) => left(
+            NetworkFailure(message: 'Failed to load credit score: $error')),
+        (data) => right(data as CreditScore),
+      ),
+      creditScoreChart: results[1].fold(
+        (error) => left(
+            NetworkFailure(message: 'Failed to load credit history: $error')),
+        (data) => right(data as CreditScoreChart),
+      ),
+      creditFactors: results[2].fold(
+        (error) => left(
+            NetworkFailure(message: 'Failed to load credit factors: $error')),
+        (data) => right(data as CreditFactors),
+      ),
+      accountDetails: results[3].fold(
+        (error) => left(
+            NetworkFailure(message: 'Failed to load account details: $error')),
+        (data) => right(data as AccountDetails),
+      ),
+      creditCardAccounts: results[4].fold(
+        (error) => left(
+            NetworkFailure(message: 'Failed to load credit cards: $error')),
+        (data) => right(data as CreditCardAccounts),
+      ),
+    );
   }
 
   Future<void> refresh() async {

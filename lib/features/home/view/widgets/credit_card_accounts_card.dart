@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meet_sam_ava/features/home/model/credit_card_accounts_model.dart';
 import 'package:meet_sam_ava/core/theme/tokens/spacing_tokens.dart';
+import 'package:meet_sam_ava/shared/widgets/animated_credit_progress_bar.dart';
 
 class CreditCardAccountsCard extends StatelessWidget {
   final CreditCardAccounts? creditCardAccounts;
@@ -21,17 +22,39 @@ class CreditCardAccountsCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Open credit card accounts',
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.w600,
+        Padding(
+          padding: const EdgeInsets.only(left: SpacingTokens.space1),
+          child: Text(
+            'Open credit card accounts',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
           ),
         ),
-        const SizedBox(height: SpacingTokens.space4),
-        ...accounts.map((account) => Padding(
-          padding: const EdgeInsets.only(bottom: SpacingTokens.space3),
-          child: CreditCardAccountItem(account: account),
-        )),
+        const SizedBox(height: SpacingTokens.space5),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(SpacingTokens.space5),
+            child: Column(
+              children: [
+                for (int i = 0; i < accounts.length; i++) ...[
+                  CreditCardAccountItem(account: accounts[i]),
+                  if (i < accounts.length - 1) ...[
+                    const SizedBox(height: SpacingTokens.space5),
+                    Container(
+                      height: 1,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .outline
+                          .withValues(alpha: 0.2),
+                    ),
+                    const SizedBox(height: SpacingTokens.space5),
+                  ],
+                ],
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -47,58 +70,64 @@ class CreditCardAccountItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(SpacingTokens.space4),
-        child: Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Header with provider name and percentage
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    account.provider,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+            Text(
+              account.provider,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
                   ),
-                  const SizedBox(height: SpacingTokens.space1),
-                  Text(
-                    account.balance,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Text(
-                    account.reportedDate,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ],
-              ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  account.utilizationPercentage,
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.w700,
+            Text(
+              account.utilizationPercentageString,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
                   ),
-                ),
-                const SizedBox(height: SpacingTokens.space1),
-                Text(
-                  account.creditLimit,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-                ),
-              ],
             ),
           ],
         ),
-      ),
+        const SizedBox(height: SpacingTokens.space3),
+
+        // Animated progress bar
+        AnimatedCreditProgressBar(
+          percentage: account.utilizationPercentage,
+          height: 8.0,
+        ),
+        const SizedBox(height: SpacingTokens.space3),
+
+        // Balance and limit row
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              '${account.balance} Balance',
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+            ),
+            Text(
+              '${account.creditLimit} Limit',
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+            ),
+          ],
+        ),
+        const SizedBox(height: SpacingTokens.space1),
+
+        // Reported date
+        Text(
+          account.reportedDate,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+        ),
+      ],
     );
   }
 }
