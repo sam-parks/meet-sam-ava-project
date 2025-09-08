@@ -20,18 +20,15 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final themeMode = ref.watch(themeModeNotifierProvider);
-    final lightTheme = ref.watch(lightThemeProvider);
-    final darkTheme = ref.watch(darkThemeProvider);
+    final theme = ref.watch(appThemeProvider);
 
     return MaterialApp.router(
       title: 'MVVM + Riverpod 3 + AutoRoute + Formz',
       routerConfig: router.config(
         navigatorObservers: () => [AutoRouteObserver()],
       ),
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: themeMode,
+      theme: theme,
+      themeMode: ThemeMode.light,
     );
   }
 }

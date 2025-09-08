@@ -38,7 +38,7 @@ final class FeedbackViewModelProvider
   }
 }
 
-String _$feedbackViewModelHash() => r'3c4e47ef6fa0fbcfe60fcf95ef3117ed58812f83';
+String _$feedbackViewModelHash() => r'4cac41412b7880355efeedcb7171814ed5cca26c';
 
 abstract class _$FeedbackViewModel extends $Notifier<FeedbackState> {
   FeedbackState build();

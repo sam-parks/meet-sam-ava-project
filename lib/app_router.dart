@@ -8,7 +8,25 @@ part 'app_router.gr.dart';
 class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(path: '/', page: HomeRoute.page),
-        AutoRoute(path: '/employment', page: EmploymentInfoRoute.page),
+        // Home route
+        AutoRoute(
+          path: '/',
+          page: HomeRoute.page,
+          initial: true,
+        ),
+
+        // Employment info route - web-friendly path
+        AutoRoute(
+          path: '/employment-info',
+          page: EmploymentInfoRoute.page,
+        ),
+
+        // Wildcard route for handling undefined paths (must be last)
+        AutoRoute(
+          path: '*',
+          page: HomeRoute.page.copyWith(
+            name: 'HomeRouteWildcard',
+          ),
+        ),
       ];
 }

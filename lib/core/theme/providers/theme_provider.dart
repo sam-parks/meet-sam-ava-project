@@ -8,67 +8,36 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'theme_provider.g.dart';
 
 @riverpod
-class ThemeModeNotifier extends _$ThemeModeNotifier {
-  @override
-  ThemeMode build() {
-    return ThemeMode.system;
-  }
-
-  void setThemeMode(ThemeMode mode) {
-    state = mode;
-  }
-
-  void toggleTheme() {
-    state = state == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
-  }
-}
-
-@riverpod
-ThemeData appTheme(Ref ref, Brightness brightness) {
-  final isDark = brightness == Brightness.dark;
-
-  final colorScheme = ColorScheme(
-    brightness: brightness,
-    primary: isDark ? ColorTokensDark.primary : ColorTokens.primary,
-    onPrimary:
-        isDark ? ColorTokensDark.textOnPrimary : ColorTokens.textOnPrimary,
-    primaryContainer:
-        isDark ? ColorTokensDark.primaryDark : ColorTokens.primaryLight,
-    onPrimaryContainer:
-        isDark ? ColorTokensDark.textPrimary : ColorTokens.textPrimary,
-    secondary: isDark ? ColorTokensDark.secondary : ColorTokens.secondary,
-    onSecondary: ColorTokensDark.textOnSecondary,
-    secondaryContainer:
-        isDark ? ColorTokensDark.secondaryDark : ColorTokens.secondaryLight,
-    onSecondaryContainer: isDark
-        ? ColorTokensDark.textOnSecondaryDark
-        : ColorTokens.textOnSecondaryLight,
-    tertiary: isDark ? ColorTokensDark.info : ColorTokens.info,
+ThemeData appTheme(Ref ref) {
+  final colorScheme = const ColorScheme(
+    brightness: Brightness.light,
+    primary: ColorTokens.primary,
+    onPrimary: ColorTokens.textOnPrimary,
+    primaryContainer: ColorTokens.primaryLight,
+    onPrimaryContainer: ColorTokens.textPrimary,
+    secondary: ColorTokens.secondary,
+    onSecondary: ColorTokens.textOnPrimary,
+    secondaryContainer: ColorTokens.secondaryLight,
+    onSecondaryContainer: ColorTokens.textOnSecondaryLight,
+    tertiary: ColorTokens.info,
     onTertiary: ColorTokens.textOnPrimary,
-    tertiaryContainer:
-        isDark ? ColorTokensDark.infoDark : ColorTokens.infoLight,
-    onTertiaryContainer:
-        isDark ? ColorTokensDark.textPrimary : ColorTokens.textPrimary,
-    error: isDark ? ColorTokensDark.error : ColorTokens.error,
+    tertiaryContainer: ColorTokens.infoLight,
+    onTertiaryContainer: ColorTokens.textPrimary,
+    error: ColorTokens.error,
     onError: ColorTokens.textOnPrimary,
-    errorContainer: isDark ? ColorTokensDark.errorDark : ColorTokens.errorLight,
-    onErrorContainer:
-        isDark ? ColorTokensDark.textPrimary : ColorTokens.textPrimary,
-    surface: isDark ? ColorTokensDark.surface : ColorTokens.surface,
-    onSurface: isDark ? ColorTokensDark.textPrimary : ColorTokens.textPrimary,
-    surfaceContainerHighest:
-        isDark ? ColorTokensDark.surfaceVariant : ColorTokens.surfaceVariant,
-    onSurfaceVariant:
-        isDark ? ColorTokensDark.textSecondary : ColorTokens.textSecondary,
-    outline: isDark ? ColorTokensDark.border : ColorTokens.border,
-    outlineVariant:
-        isDark ? ColorTokensDark.borderLight : ColorTokens.borderLight,
+    errorContainer: ColorTokens.errorLight,
+    onErrorContainer: ColorTokens.textPrimary,
+    surface: ColorTokens.surface,
+    onSurface: ColorTokens.textPrimary,
+    surfaceContainerHighest: ColorTokens.surfaceVariant,
+    onSurfaceVariant: ColorTokens.textSecondary,
+    outline: ColorTokens.border,
+    outlineVariant: ColorTokens.borderLight,
     shadow: Colors.black26,
     scrim: Colors.black54,
-    inverseSurface: isDark ? ColorTokens.surface : ColorTokensDark.surface,
-    onInverseSurface:
-        isDark ? ColorTokens.textPrimary : ColorTokensDark.textPrimary,
-    inversePrimary: isDark ? ColorTokens.primary : ColorTokensDark.primary,
+    inverseSurface: ColorTokens.surfaceVariant,
+    onInverseSurface: ColorTokens.textPrimary,
+    inversePrimary: ColorTokens.primary,
   );
 
   final textTheme = const TextTheme(
@@ -91,21 +60,20 @@ ThemeData appTheme(Ref ref, Brightness brightness) {
 
   return ThemeData(
     useMaterial3: true,
-    brightness: brightness,
+    brightness: Brightness.light,
     colorScheme: colorScheme,
     textTheme: textTheme,
     fontFamily: TypographyTokens.fontFamily,
-    scaffoldBackgroundColor:
-        isDark ? ColorTokensDark.background : ColorTokens.background,
+    scaffoldBackgroundColor: ColorTokens.background,
     cardTheme: CardThemeData(
       elevation: ElevationTokens.card,
       shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: isDark ? ColorTokens.borderDark : ColorTokens.borderLight,
+        side: const BorderSide(
+          color: ColorTokens.borderLight,
         ),
         borderRadius: BorderRadius.circular(RadiusTokens.card),
       ),
-      color: isDark ? ColorTokensDark.surface : ColorTokens.surface,
+      color: ColorTokens.surface,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -114,9 +82,8 @@ ThemeData appTheme(Ref ref, Brightness brightness) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(RadiusTokens.button),
         ),
-        backgroundColor: isDark ? ColorTokensDark.primary : ColorTokens.primary,
-        foregroundColor:
-            isDark ? ColorTokensDark.textOnPrimary : ColorTokens.textOnPrimary,
+        backgroundColor: ColorTokens.primary,
+        foregroundColor: ColorTokens.textOnPrimary,
         padding: const EdgeInsets.symmetric(
           horizontal: SpacingTokens.space6,
           vertical: SpacingTokens.space3,
@@ -125,12 +92,12 @@ ThemeData appTheme(Ref ref, Brightness brightness) {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        backgroundColor:
-            isDark ? ColorTokensDark.background : ColorTokens.background,
+        backgroundColor: ColorTokens.background,
+        foregroundColor: ColorTokens.primary,
         minimumSize: const Size.fromHeight(SizeTokens.buttonHeightLg),
         shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: isDark ? ColorTokensDark.primary : ColorTokens.primary,
+          side: const BorderSide(
+            color: ColorTokens.primary,
             width: 2,
           ),
           borderRadius: BorderRadius.circular(RadiusTokens.button),
@@ -140,8 +107,8 @@ ThemeData appTheme(Ref ref, Brightness brightness) {
           horizontal: SpacingTokens.space6,
           vertical: SpacingTokens.space3,
         ),
-        side: BorderSide(
-          color: isDark ? ColorTokensDark.primary : ColorTokens.primary,
+        side: const BorderSide(
+          color: ColorTokens.primary,
         ),
       ),
     ),
@@ -160,37 +127,36 @@ ThemeData appTheme(Ref ref, Brightness brightness) {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor:
-          isDark ? ColorTokensDark.surfaceVariant : ColorTokens.surfaceVariant,
+      fillColor: ColorTokens.surfaceVariant,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(RadiusTokens.input),
-        borderSide: BorderSide(
-          color: isDark ? ColorTokensDark.border : ColorTokens.border,
+        borderSide: const BorderSide(
+          color: ColorTokens.border,
         ),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(RadiusTokens.input),
-        borderSide: BorderSide(
-          color: isDark ? ColorTokensDark.border : ColorTokens.border,
+        borderSide: const BorderSide(
+          color: ColorTokens.border,
         ),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(RadiusTokens.input),
-        borderSide: BorderSide(
-          color: isDark ? ColorTokensDark.primary : ColorTokens.primary,
+        borderSide: const BorderSide(
+          color: ColorTokens.primary,
           width: 2,
         ),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(RadiusTokens.input),
-        borderSide: BorderSide(
-          color: isDark ? ColorTokensDark.error : ColorTokens.error,
+        borderSide: const BorderSide(
+          color: ColorTokens.error,
         ),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(RadiusTokens.input),
-        borderSide: BorderSide(
-          color: isDark ? ColorTokensDark.error : ColorTokens.error,
+        borderSide: const BorderSide(
+          color: ColorTokens.error,
           width: 2,
         ),
       ),
@@ -199,25 +165,23 @@ ThemeData appTheme(Ref ref, Brightness brightness) {
         vertical: SpacingTokens.space3,
       ),
       labelStyle: TypographyTokens.labelLarge.copyWith(
-        color:
-            isDark ? ColorTokensDark.textSecondary : ColorTokens.textSecondary,
+        color: ColorTokens.textSecondary,
       ),
       hintStyle: TypographyTokens.bodyMedium.copyWith(
-        color: isDark ? ColorTokensDark.textTertiary : ColorTokens.textTertiary,
+        color: ColorTokens.textTertiary,
       ),
     ),
     appBarTheme: AppBarTheme(
       elevation: ElevationTokens.appBar,
       centerTitle: false,
-      backgroundColor: isDark ? ColorTokensDark.surface : ColorTokens.surface,
-      foregroundColor:
-          isDark ? ColorTokensDark.textPrimary : ColorTokens.textPrimary,
+      backgroundColor: ColorTokens.surface,
+      foregroundColor: ColorTokens.textPrimary,
       titleTextStyle: TypographyTokens.headlineSmall.copyWith(
-        color: isDark ? ColorTokensDark.textPrimary : ColorTokens.textPrimary,
+        color: ColorTokens.textPrimary,
       ),
     ),
-    dividerTheme: DividerThemeData(
-      color: isDark ? ColorTokensDark.divider : ColorTokens.divider,
+    dividerTheme: const DividerThemeData(
+      color: ColorTokens.divider,
       thickness: 1,
       space: SpacingTokens.space4,
     ),
@@ -236,53 +200,32 @@ ThemeData appTheme(Ref ref, Brightness brightness) {
         borderRadius: BorderRadius.circular(RadiusTokens.dialog),
       ),
     ),
-    bottomSheetTheme: BottomSheetThemeData(
+    bottomSheetTheme: const BottomSheetThemeData(
       elevation: ElevationTokens.bottomSheet,
-      shape: const RoundedRectangleBorder(
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(RadiusTokens.bottomSheet),
         ),
       ),
-      backgroundColor: isDark ? ColorTokensDark.surface : ColorTokens.surface,
+      backgroundColor: ColorTokens.surface,
     ),
-    extensions: [
+    extensions: const [
       AppThemeExtension(
-        success: isDark ? ColorTokensDark.success : ColorTokens.success,
-        successLight:
-            isDark ? ColorTokensDark.successLight : ColorTokens.successLight,
-        successDark:
-            isDark ? ColorTokensDark.successDark : ColorTokens.successDark,
-        warning: isDark ? ColorTokensDark.warning : ColorTokens.warning,
-        warningLight:
-            isDark ? ColorTokensDark.warningLight : ColorTokens.warningLight,
-        warningDark:
-            isDark ? ColorTokensDark.warningDark : ColorTokens.warningDark,
-        info: isDark ? ColorTokensDark.info : ColorTokens.info,
-        infoLight: isDark ? ColorTokensDark.infoLight : ColorTokens.infoLight,
-        infoDark: isDark ? ColorTokensDark.infoDark : ColorTokens.infoDark,
-        chartGradientStart: isDark
-            ? ColorTokensDark.chartGradientStart
-            : ColorTokens.chartGradientStart,
-        chartGradientEnd: isDark
-            ? ColorTokensDark.chartGradientEnd
-            : ColorTokens.chartGradientEnd,
-        textTertiary:
-            isDark ? ColorTokensDark.textTertiary : ColorTokens.textTertiary,
-        textDisabled:
-            isDark ? ColorTokensDark.textDisabled : ColorTokens.textDisabled,
-        borderDark:
-            isDark ? ColorTokensDark.borderDark : ColorTokens.borderDark,
+        success: ColorTokens.success,
+        successLight: ColorTokens.successLight,
+        successDark: ColorTokens.successDark,
+        warning: ColorTokens.warning,
+        warningLight: ColorTokens.warningLight,
+        warningDark: ColorTokens.warningDark,
+        info: ColorTokens.info,
+        infoLight: ColorTokens.infoLight,
+        infoDark: ColorTokens.infoDark,
+        chartGradientStart: ColorTokens.chartGradientStart,
+        chartGradientEnd: ColorTokens.chartGradientEnd,
+        textTertiary: ColorTokens.textTertiary,
+        textDisabled: ColorTokens.textDisabled,
+        borderDark: ColorTokens.borderDark,
       ),
     ],
   );
-}
-
-@riverpod
-ThemeData lightTheme(Ref ref) {
-  return ref.watch(appThemeProvider(Brightness.light));
-}
-
-@riverpod
-ThemeData darkTheme(Ref ref) {
-  return ref.watch(appThemeProvider(Brightness.dark));
 }

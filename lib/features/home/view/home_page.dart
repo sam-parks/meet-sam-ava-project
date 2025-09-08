@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meet_sam_ava/app_router.dart';
 import 'package:meet_sam_ava/core/theme/tokens/spacing_tokens.dart';
 import 'package:meet_sam_ava/features/home/model/credit_score_model.dart';
 import 'package:meet_sam_ava/features/home/view/widgets/credit_score_card.dart';
@@ -26,7 +25,7 @@ class HomePage extends ConsumerWidget {
         leading: IconButton(
           icon: const Icon(Icons.settings),
           onPressed: () {
-            context.router.push(const EmploymentInfoRoute());
+            context.router.pushPath('/employment-info');
           },
         ),
         title: Text(

@@ -31,7 +31,7 @@ final class EmploymentInfoViewModelProvider extends $AsyncNotifierProvider<
 }
 
 String _$employmentInfoViewModelHash() =>
-    r'5b1002e0e343262d06f5970754843e5f181659ad';
+    r'42f6fc699917e530ac0627a45d61813eaa38ea23';
 
 abstract class _$EmploymentInfoViewModel
     extends $AsyncNotifier<EmploymentInfoState> {
