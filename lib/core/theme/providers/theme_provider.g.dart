@@ -112,7 +112,7 @@ final class AppThemeProvider
   }
 }
 
-String _$appThemeHash() => r'a0e812afc022153f20e501af3548209eb3bd0e08';
+String _$appThemeHash() => r'26720b29ec22d8cbbf55dae069293c6579b261d2';
 
 final class AppThemeFamily extends $Family
     with $FunctionalFamilyOverride<ThemeData, Brightness> {

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'feedback_repository.dart';
+part of 'repository_providers.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -48,7 +48,7 @@ final class FeedbackRepositoryProvider extends $FunctionalProvider<
 }
 
 String _$feedbackRepositoryHash() =>
-    r'58ccafb210ba0432e855278bbef00156b98ea614';
+    r'3ba4467d9e4da4e2a6a2c274a072c0076b9bc1d0';
 
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

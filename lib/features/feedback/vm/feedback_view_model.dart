@@ -1,6 +1,6 @@
 import 'package:formz/formz.dart';
 import 'package:meet_sam_ava/features/feedback/model/feedback_data.dart';
-import 'package:meet_sam_ava/features/feedback/repositories/feedback_repository.dart';
+import 'package:meet_sam_ava/features/feedback/repositories/providers/repository_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'feedback_view_model.g.dart';
@@ -52,7 +52,8 @@ class FeedbackViewModel extends _$FeedbackViewModel {
   void show() {
     state = state.copyWith(
       isVisible: true,
-      message: 'It\'s been very helpful so far!', // Default message from screenshot
+      message:
+          'It\'s been very helpful so far!', // Default message from screenshot
     );
   }
 
@@ -76,23 +77,23 @@ class FeedbackViewModel extends _$FeedbackViewModel {
     try {
       final repository = ref.read(feedbackRepositoryProvider);
       await repository.submitFeedback(state.feedbackData);
-      
+
       state = state.copyWith(
         status: FormzSubmissionStatus.success,
       );
-      
+
       // Auto-hide after successful submission with a brief delay to show success state
       Future.delayed(const Duration(milliseconds: 1500), () {
         if (state.status == FormzSubmissionStatus.success && state.isVisible) {
           hide();
         }
       });
-      
+
       return true;
     } catch (e) {
       state = state.copyWith(
         status: FormzSubmissionStatus.failure,
-        error: e.toString().contains('Network error') 
+        error: e.toString().contains('Network error')
             ? 'Network error: Please check your connection'
             : 'Failed to send feedback. Please try again.',
       );

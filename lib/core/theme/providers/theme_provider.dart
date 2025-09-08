@@ -125,6 +125,8 @@ ThemeData appTheme(Ref ref, Brightness brightness) {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
+        backgroundColor:
+            isDark ? ColorTokensDark.background : ColorTokens.background,
         minimumSize: const Size.fromHeight(SizeTokens.buttonHeightLg),
         shape: RoundedRectangleBorder(
           side: BorderSide(
