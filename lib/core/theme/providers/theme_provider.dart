@@ -114,7 +114,9 @@ ThemeData appTheme(Ref ref, Brightness brightness) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(RadiusTokens.button),
         ),
-        textStyle: TypographyTokens.button,
+        backgroundColor: isDark ? ColorTokensDark.primary : ColorTokens.primary,
+        foregroundColor:
+            isDark ? ColorTokensDark.textOnPrimary : ColorTokens.textOnPrimary,
         padding: const EdgeInsets.symmetric(
           horizontal: SpacingTokens.space6,
           vertical: SpacingTokens.space3,
@@ -125,6 +127,10 @@ ThemeData appTheme(Ref ref, Brightness brightness) {
       style: OutlinedButton.styleFrom(
         minimumSize: const Size.fromHeight(SizeTokens.buttonHeightLg),
         shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: isDark ? ColorTokensDark.primary : ColorTokens.primary,
+            width: 2,
+          ),
           borderRadius: BorderRadius.circular(RadiusTokens.button),
         ),
         textStyle: TypographyTokens.button,
@@ -133,7 +139,7 @@ ThemeData appTheme(Ref ref, Brightness brightness) {
           vertical: SpacingTokens.space3,
         ),
         side: BorderSide(
-          color: isDark ? ColorTokensDark.border : ColorTokens.border,
+          color: isDark ? ColorTokensDark.primary : ColorTokens.primary,
         ),
       ),
     ),
