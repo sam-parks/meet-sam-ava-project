@@ -84,13 +84,14 @@ class TotalBalanceCard extends StatelessWidget {
             if (utilizationRanges.isNotEmpty) ...[
               Row(
                 children: [
-                  // Green section (0-29%)
+                  // Excellent + Good section (0-29%)
                   Expanded(
                     flex: 2,
                     child: Column(
                       children: [
-                        // Show rating label only if this range is active
-                        if (_isRangeActive(0, 29, utilizationPercentage))
+                        // Show rating label if Excellent (0-9%) or Good (10-29%) is active
+                        if (_isRangeActive(0, 9, utilizationPercentage) || 
+                            _isRangeActive(10, 29, utilizationPercentage))
                           Text(
                             ratingLabel,
                             style: Theme.of(context)
@@ -117,12 +118,12 @@ class TotalBalanceCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // Peach section (30-49%)
+                  // Fair section (30-49%)
                   Expanded(
                     flex: 1,
                     child: Column(
                       children: [
-                        // Show rating label only if this range is active
+                        // Show rating label only if Fair (30-49%) is active
                         if (_isRangeActive(30, 49, utilizationPercentage))
                           Text(
                             ratingLabel,
@@ -147,13 +148,14 @@ class TotalBalanceCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // Pink section (50%+)
+                  // Needs Work + Poor section (50%+)
                   Expanded(
                     flex: 2,
                     child: Column(
                       children: [
-                        // Show rating label only if this range is active
-                        if (_isRangeActive(50, 100, utilizationPercentage))
+                        // Show rating label if Needs Work (50-74%) or Poor (75%+) is active
+                        if (_isRangeActive(50, 74, utilizationPercentage) || 
+                            _isRangeActive(75, 100, utilizationPercentage))
                           Text(
                             ratingLabel,
                             style: Theme.of(context)

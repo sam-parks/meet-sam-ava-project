@@ -29,51 +29,51 @@ class MockDataService {
         'impact': 'low',
       },
       
-      // Very Good (10-29% utilization)
+      // Good (10-29% utilization)
       {
         'totalBalance': 15000.0,
         'totalLimit': 75000.0,
         'utilization': 20.0,
-        'rating': 'Very Good',
+        'rating': 'Good',
         'impact': 'low',
       },
       {
         'totalBalance': 25000.0,
         'totalLimit': 100000.0,
         'utilization': 25.0,
-        'rating': 'Very Good',
+        'rating': 'Good',
         'impact': 'low',
       },
       
-      // Good (30-49% utilization)
+      // Fair (30-49% utilization)
       {
         'totalBalance': 40000.0,
         'totalLimit': 100000.0,
         'utilization': 40.0,
-        'rating': 'Good',
+        'rating': 'Fair',
         'impact': 'medium',
       },
       {
         'totalBalance': 35000.0,
         'totalLimit': 80000.0,
         'utilization': 43.8,
-        'rating': 'Good',
+        'rating': 'Fair',
         'impact': 'medium',
       },
       
-      // Fair (50-74% utilization)
+      // Needs Work (50-74% utilization)
       {
         'totalBalance': 60000.0,
         'totalLimit': 100000.0,
         'utilization': 60.0,
-        'rating': 'Fair',
+        'rating': 'Needs Work',
         'impact': 'high',
       },
       {
         'totalBalance': 70000.0,
         'totalLimit': 100000.0,
         'utilization': 70.0,
-        'rating': 'Fair',
+        'rating': 'Needs Work',
         'impact': 'high',
       },
       

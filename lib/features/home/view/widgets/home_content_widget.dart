@@ -27,6 +27,9 @@ class HomeContentWidget extends StatelessWidget {
             (failure) => ErrorStateWidget(failure: failure),
             (creditScore) => Column(
               children: [
+                const SizedBox(
+                  height: SpacingTokens.space4,
+                ),
                 CreditScoreChartCard(
                   creditScore: creditScore,
                   creditScoreChart: creditScoreChart,
