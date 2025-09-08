@@ -108,7 +108,7 @@ class TotalBalanceCard extends StatelessWidget {
                           height: 24,
                           margin: const EdgeInsets.only(right: 1),
                           decoration: BoxDecoration(
-                            color: _getSegmentColor(0, utilizationRanges),
+                            color: UtilizationRating.getBarColor(0),
                             borderRadius: const BorderRadius.horizontal(
                               left: Radius.circular(4),
                             ),
@@ -141,7 +141,7 @@ class TotalBalanceCard extends StatelessWidget {
                           height: 24,
                           margin: const EdgeInsets.only(right: 1),
                           decoration: BoxDecoration(
-                            color: _getSegmentColor(2, utilizationRanges),
+                            color: UtilizationRating.getBarColor(2),
                           ),
                         ),
                       ],
@@ -170,7 +170,7 @@ class TotalBalanceCard extends StatelessWidget {
                         Container(
                           height: 24,
                           decoration: BoxDecoration(
-                            color: _getSegmentColor(3, utilizationRanges),
+                            color: UtilizationRating.getBarColor(3),
                             borderRadius: const BorderRadius.horizontal(
                               right: Radius.circular(4),
                             ),
@@ -224,10 +224,6 @@ class TotalBalanceCard extends StatelessWidget {
     }
     // Default fallback
     return Theme.of(context).colorScheme.onSurface;
-  }
-
-  Color _getSegmentColor(int segmentIndex, List<UtilizationRange> ranges) {
-    return UtilizationRating.getBarColor(segmentIndex);
   }
 
   bool _isRangeActive(double min, double max, double percentage) {

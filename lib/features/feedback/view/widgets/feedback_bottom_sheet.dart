@@ -47,7 +47,7 @@ class FeedbackBottomSheet extends ConsumerWidget {
               decoration: const InputDecoration(
                 hintText: 'Tell us about your experience...',
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.all(SpacingTokens.space2),
+                contentPadding: EdgeInsets.all(SpacingTokens.space4),
               ),
               style: Theme.of(context).textTheme.bodyLarge,
             ),
@@ -68,15 +68,7 @@ class FeedbackBottomSheet extends ConsumerWidget {
                           .submit();
                       if (context.mounted) {
                         if (success) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content:
-                                  const Text('Thank you for your feedback!'),
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.inverseSurface,
-                              behavior: SnackBarBehavior.floating,
-                            ),
-                          );
+                          Navigator.of(context).pop();
                         } else if (state.error != null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

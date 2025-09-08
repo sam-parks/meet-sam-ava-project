@@ -82,13 +82,6 @@ class FeedbackViewModel extends _$FeedbackViewModel {
         status: FormzSubmissionStatus.success,
       );
 
-      // Auto-hide after successful submission with a brief delay to show success state
-      Future.delayed(const Duration(milliseconds: 1500), () {
-        if (state.status == FormzSubmissionStatus.success && state.isVisible) {
-          hide();
-        }
-      });
-
       return true;
     } catch (e) {
       state = state.copyWith(

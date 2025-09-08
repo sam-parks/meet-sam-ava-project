@@ -229,15 +229,20 @@ class EmploymentInfoPage extends ConsumerWidget {
                             displayWidget: SizedBox(
                               width: double.infinity,
                               child: Text(
-                                state.address.value.isEmpty 
-                                    ? 'Not set' 
+                                state.address.value.isEmpty
+                                    ? 'Not set'
                                     : _formatAddress(state.address.value),
-                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  color: state.address.value.isEmpty
-                                      ? Theme.of(context).colorScheme.onSurfaceVariant
-                                      : null,
-                                  height: 1.4,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                      color: state.address.value.isEmpty
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .onSurfaceVariant
+                                          : null,
+                                      height: 1.4,
+                                    ),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 softWrap: true,
@@ -276,7 +281,8 @@ class EmploymentInfoPage extends ConsumerWidget {
                                         .textTheme
                                         .bodyLarge
                                         ?.copyWith(
-                                          color: state.timeWithEmployer.value.isEmpty
+                                          color: state.timeWithEmployer.value
+                                                  .isEmpty
                                               ? Theme.of(context)
                                                   .colorScheme
                                                   .onSurfaceVariant
@@ -288,38 +294,46 @@ class EmploymentInfoPage extends ConsumerWidget {
                                   children: [
                                     Expanded(
                                       child: DropdownButtonFormField<String>(
-                                        value: _extractYears(state.timeWithEmployer.value),
+                                        value: _extractYears(
+                                            state.timeWithEmployer.value),
                                         decoration: const InputDecoration(
                                           hintText: 'Years',
                                         ),
                                         items: List.generate(10, (index) {
                                           return DropdownMenuItem(
                                             value: '$index',
-                                            child: Text('$index ${index == 1 ? 'year' : 'years'}'),
+                                            child: Text(
+                                                '$index ${index == 1 ? 'year' : 'years'}'),
                                           );
                                         }),
                                         onChanged: (years) {
-                                          final months = _extractMonths(state.timeWithEmployer.value);
-                                          _updateTimeWithEmployer(ref, years ?? '0', months);
+                                          final months = _extractMonths(
+                                              state.timeWithEmployer.value);
+                                          _updateTimeWithEmployer(
+                                              ref, years ?? '0', months);
                                         },
                                       ),
                                     ),
                                     const SizedBox(width: SpacingTokens.space3),
                                     Expanded(
                                       child: DropdownButtonFormField<String>(
-                                        value: _extractMonths(state.timeWithEmployer.value),
+                                        value: _extractMonths(
+                                            state.timeWithEmployer.value),
                                         decoration: const InputDecoration(
                                           hintText: 'Months',
                                         ),
                                         items: List.generate(12, (index) {
                                           return DropdownMenuItem(
                                             value: '$index',
-                                            child: Text('$index ${index == 1 ? 'month' : 'months'}'),
+                                            child: Text(
+                                                '$index ${index == 1 ? 'month' : 'months'}'),
                                           );
                                         }),
                                         onChanged: (months) {
-                                          final years = _extractYears(state.timeWithEmployer.value);
-                                          _updateTimeWithEmployer(ref, years, months ?? '0');
+                                          final years = _extractYears(
+                                              state.timeWithEmployer.value);
+                                          _updateTimeWithEmployer(
+                                              ref, years, months ?? '0');
                                         },
                                       ),
                                     ),
@@ -461,20 +475,25 @@ class EmploymentInfoPage extends ConsumerWidget {
                                           .submit();
                                       if (success && context.mounted) {
                                         // Navigate back to home first
-                                        context.router.pop();
-
-                                        // Show feedback bottom sheet after a short delay
-                                        Future.delayed(
-                                            const Duration(milliseconds: 300),
-                                            () {
-                                          if (context.mounted) {
-                                            ref
-                                                .read(feedbackViewModelProvider
-                                                    .notifier)
-                                                .show();
-                                            FeedbackBottomSheet.show(context);
-                                          }
-                                        });
+                                        await context.router
+                                            .navigatePath('/')
+                                            .then((route) async => {
+                                                  // Show feedback bottom sheet after a short delay
+                                                  Future.delayed(
+                                                      const Duration(
+                                                          milliseconds: 300),
+                                                      () {
+                                                    if (context.mounted) {
+                                                      ref
+                                                          .read(
+                                                              feedbackViewModelProvider
+                                                                  .notifier)
+                                                          .show();
+                                                      FeedbackBottomSheet.show(
+                                                          context);
+                                                    }
+                                                  })
+                                                });
                                       }
                                     },
                               child: state.status ==
@@ -606,8 +625,18 @@ class EmploymentInfoPage extends ConsumerWidget {
 
   String _getMonthName(int month) {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sept',
+      'Oct',
+      'Nov',
+      'Dec'
     ];
     return months[month - 1];
   }
@@ -651,7 +680,7 @@ class EmploymentInfoPage extends ConsumerWidget {
   void _updateTimeWithEmployer(WidgetRef ref, String years, String months) {
     final yearsInt = int.tryParse(years) ?? 0;
     final monthsInt = int.tryParse(months) ?? 0;
-    
+
     String timeText = '';
     if (yearsInt > 0) {
       timeText = '$yearsInt ${yearsInt == 1 ? 'year' : 'years'}';
@@ -663,8 +692,9 @@ class EmploymentInfoPage extends ConsumerWidget {
     if (timeText.isEmpty) {
       timeText = '0 years';
     }
-    
-    ref.read(employmentInfoViewModelProvider.notifier)
+
+    ref
+        .read(employmentInfoViewModelProvider.notifier)
         .onTimeWithEmployerChanged(timeText);
   }
 }
