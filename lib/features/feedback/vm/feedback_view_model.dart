@@ -75,7 +75,7 @@ class FeedbackViewModel extends _$FeedbackViewModel {
     );
 
     try {
-      final repository = ref.read(feedbackRepositoryProvider);
+      final repository = ref.watch(feedbackRepositoryProvider);
       await repository.submitFeedback(state.feedbackData);
 
       state = state.copyWith(

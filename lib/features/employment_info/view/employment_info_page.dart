@@ -79,295 +79,347 @@ class EmploymentInfoPage extends ConsumerWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(SpacingTokens.space4),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          state.isEditMode
-                              ? 'Edit employment information'
-                              : 'Confirm your employment',
-                          style: TypographyTokens.headlineLargeCondensed,
-                        ),
-                        const SizedBox(
-                          height: SpacingTokens.space1,
-                        ),
-                        if (!state.isEditMode)
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                bottom: SpacingTokens.space4),
-                            child: Text(
-                              'Please review and confirm the below employment details are up-to-date.',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSurfaceVariant,
-                                    height: 1.6,
-                                  ),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            state.isEditMode
+                                ? 'Edit employment information'
+                                : 'Confirm your employment',
+                            style: TypographyTokens.headlineLargeCondensed,
+                          ),
+                          const SizedBox(
+                            height: SpacingTokens.space1,
+                          ),
+                          if (!state.isEditMode)
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom: SpacingTokens.space4),
+                              child: Text(
+                                'Please review and confirm the below employment details are up-to-date.',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurfaceVariant,
+                                      height: 1.6,
+                                    ),
+                              ),
+                            ),
+                          const SizedBox(
+                            height: SpacingTokens.space7,
+                          ),
+                          AnimatedDropdownWidget(
+                            label: 'Employment type',
+                            value: state.employmentType.value,
+                            isEditMode: state.isEditMode,
+                            items: const [
+                              DropdownMenuItem(
+                                  value: 'Full-time', child: Text('Full-time')),
+                              DropdownMenuItem(
+                                  value: 'Part-time', child: Text('Part-time')),
+                              DropdownMenuItem(
+                                  value: 'Contract', child: Text('Contract')),
+                            ],
+                            onChanged: (value) => ref
+                                .read(employmentInfoViewModelProvider.notifier)
+                                .onEmploymentTypeChanged(value ?? ''),
+                          ),
+                          const SizedBox(height: SpacingTokens.space4),
+
+                          AnimatedFieldWidget(
+                            label: 'Employer',
+                            value: state.employer.value,
+                            isEditMode: state.isEditMode,
+                            editWidget: TextFormField(
+                              initialValue: state.employer.value,
+                              onChanged: ref
+                                  .read(
+                                      employmentInfoViewModelProvider.notifier)
+                                  .onEmployerChanged,
+                              decoration: InputDecoration(
+                                errorText: state.employer.displayError != null
+                                    ? 'Please enter your employer'
+                                    : null,
+                              ),
                             ),
                           ),
-                        const SizedBox(
-                          height: SpacingTokens.space7,
-                        ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                AnimatedDropdownWidget(
-                                  label: 'Employment type',
-                                  value: state.employmentType.value,
-                                  isEditMode: state.isEditMode,
-                                  items: const [
-                                    DropdownMenuItem(
-                                        value: 'Full-time',
-                                        child: Text('Full-time')),
-                                    DropdownMenuItem(
-                                        value: 'Part-time',
-                                        child: Text('Part-time')),
-                                    DropdownMenuItem(
-                                        value: 'Contract',
-                                        child: Text('Contract')),
-                                  ],
-                                  onChanged: (value) => ref
-                                      .read(employmentInfoViewModelProvider
-                                          .notifier)
-                                      .onEmploymentTypeChanged(value ?? ''),
-                                ),
-                                const SizedBox(height: SpacingTokens.space4),
+                          const SizedBox(height: SpacingTokens.space4),
 
-                                AnimatedFieldWidget(
-                                  label: 'Employer',
-                                  value: state.employer.value,
-                                  isEditMode: state.isEditMode,
-                                  editWidget: TextFormField(
-                                    initialValue: state.employer.value,
-                                    onChanged: ref
-                                        .read(employmentInfoViewModelProvider
-                                            .notifier)
-                                        .onEmployerChanged,
-                                    decoration: InputDecoration(
-                                      errorText:
-                                          state.employer.displayError != null
-                                              ? 'Please enter your employer'
+                          AnimatedFieldWidget(
+                            label: 'Job title',
+                            value: state.jobTitle.value,
+                            isEditMode: state.isEditMode,
+                            editWidget: TextFormField(
+                              initialValue: state.jobTitle.value,
+                              onChanged: ref
+                                  .read(
+                                      employmentInfoViewModelProvider.notifier)
+                                  .onJobTitleChanged,
+                              decoration: InputDecoration(
+                                errorText: state.jobTitle.displayError != null
+                                    ? 'Please enter your job title'
+                                    : null,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: SpacingTokens.space4),
+
+                          AnimatedFieldWidget(
+                            label: 'Gross annual income',
+                            value: state.grossAnnualIncome.value,
+                            isEditMode: state.isEditMode,
+                            editWidget: TextFormField(
+                              initialValue: state.grossAnnualIncome.value,
+                              onChanged: ref
+                                  .read(
+                                      employmentInfoViewModelProvider.notifier)
+                                  .onIncomeChanged,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                errorText:
+                                    state.grossAnnualIncome.displayError != null
+                                        ? 'Please enter a valid income amount'
+                                        : null,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: SpacingTokens.space4),
+
+                          AnimatedDropdownWidget(
+                            label: 'Pay frequency',
+                            value: state.payFrequency.value,
+                            isEditMode: state.isEditMode,
+                            items: const [
+                              DropdownMenuItem(
+                                  value: 'Bi-weekly', child: Text('Bi-weekly')),
+                              DropdownMenuItem(
+                                  value: 'Weekly', child: Text('Weekly')),
+                              DropdownMenuItem(
+                                  value: 'Monthly', child: Text('Monthly')),
+                              DropdownMenuItem(
+                                  value: 'Bi-monthly',
+                                  child: Text('Bi-monthly')),
+                            ],
+                            onChanged: (value) => ref
+                                .read(employmentInfoViewModelProvider.notifier)
+                                .onPayFrequencyChanged(value ?? ''),
+                          ),
+                          const SizedBox(height: SpacingTokens.space4),
+                          AnimatedFieldWidget(
+                            label: 'Employer address',
+                            value: state.address.value,
+                            isEditMode: state.isEditMode,
+                            editWidget: TextFormField(
+                              initialValue: state.address.value,
+                              onChanged: ref
+                                  .read(
+                                      employmentInfoViewModelProvider.notifier)
+                                  .onAddressChanged,
+                              maxLines: 3,
+                              decoration: InputDecoration(
+                                errorText: state.address.displayError != null
+                                    ? 'Please enter a valid address'
+                                    : null,
+                              ),
+                            ),
+                            displayWidget: SizedBox(
+                              width: double.infinity,
+                              child: Text(
+                                state.address.value.isEmpty 
+                                    ? 'Not set' 
+                                    : _formatAddress(state.address.value),
+                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                  color: state.address.value.isEmpty
+                                      ? Theme.of(context).colorScheme.onSurfaceVariant
+                                      : null,
+                                  height: 1.4,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: true,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: SpacingTokens.space4),
+
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Time with employer',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium
+                                    ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurfaceVariant,
+                                    ),
+                              ),
+                              const SizedBox(height: SpacingTokens.space2),
+                              AnimatedCrossFade(
+                                duration: const Duration(milliseconds: 300),
+                                crossFadeState: state.isEditMode
+                                    ? CrossFadeState.showSecond
+                                    : CrossFadeState.showFirst,
+                                firstChild: SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    state.timeWithEmployer.value.isEmpty
+                                        ? 'Not set'
+                                        : state.timeWithEmployer.value,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          color: state.timeWithEmployer.value.isEmpty
+                                              ? Theme.of(context)
+                                                  .colorScheme
+                                                  .onSurfaceVariant
                                               : null,
-                                    ),
+                                        ),
                                   ),
                                 ),
-                                const SizedBox(height: SpacingTokens.space4),
-
-                                AnimatedFieldWidget(
-                                  label: 'Job title',
-                                  value: state.jobTitle.value,
-                                  isEditMode: state.isEditMode,
-                                  editWidget: TextFormField(
-                                    initialValue: state.jobTitle.value,
-                                    onChanged: ref
-                                        .read(employmentInfoViewModelProvider
-                                            .notifier)
-                                        .onJobTitleChanged,
-                                    decoration: InputDecoration(
-                                      errorText:
-                                          state.jobTitle.displayError != null
-                                              ? 'Please enter your job title'
-                                              : null,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: SpacingTokens.space4),
-
-                                AnimatedFieldWidget(
-                                  label: 'Gross annual income',
-                                  value: state.grossAnnualIncome.value,
-                                  isEditMode: state.isEditMode,
-                                  editWidget: TextFormField(
-                                    initialValue: state.grossAnnualIncome.value,
-                                    onChanged: ref
-                                        .read(employmentInfoViewModelProvider
-                                            .notifier)
-                                        .onIncomeChanged,
-                                    keyboardType: TextInputType.number,
-                                    decoration: InputDecoration(
-                                      errorText: state.grossAnnualIncome
-                                                  .displayError !=
-                                              null
-                                          ? 'Please enter a valid income amount'
-                                          : null,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: SpacingTokens.space4),
-
-                                AnimatedDropdownWidget(
-                                  label: 'Pay frequency',
-                                  value: state.payFrequency.value,
-                                  isEditMode: state.isEditMode,
-                                  items: const [
-                                    DropdownMenuItem(
-                                        value: 'Bi-weekly',
-                                        child: Text('Bi-weekly')),
-                                    DropdownMenuItem(
-                                        value: 'Weekly', child: Text('Weekly')),
-                                    DropdownMenuItem(
-                                        value: 'Monthly',
-                                        child: Text('Monthly')),
-                                    DropdownMenuItem(
-                                        value: 'Bi-monthly',
-                                        child: Text('Bi-monthly')),
-                                  ],
-                                  onChanged: (value) => ref
-                                      .read(employmentInfoViewModelProvider
-                                          .notifier)
-                                      .onPayFrequencyChanged(value ?? ''),
-                                ),
-                                const SizedBox(height: SpacingTokens.space4),
-                                AnimatedFieldWidget(
-                                  label: 'Employer address',
-                                  value: state.address.value,
-                                  isEditMode: state.isEditMode,
-                                  editWidget: TextFormField(
-                                    initialValue: state.address.value,
-                                    onChanged: ref
-                                        .read(employmentInfoViewModelProvider
-                                            .notifier)
-                                        .onAddressChanged,
-                                    maxLines: 3,
-                                    decoration: InputDecoration(
-                                      errorText:
-                                          state.address.displayError != null
-                                              ? 'Please enter a valid address'
-                                              : null,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: SpacingTokens.space4),
-
-                                AnimatedDropdownWidget(
-                                  label: 'Time with employer',
-                                  value: state.timeWithEmployer.value,
-                                  isEditMode: state.isEditMode,
-                                  items: const [
-                                    DropdownMenuItem(
-                                        value: '1 year', child: Text('1 year')),
-                                    DropdownMenuItem(
-                                        value: '2 years',
-                                        child: Text('2 years')),
-                                    DropdownMenuItem(
-                                        value: '3 years',
-                                        child: Text('3 years')),
-                                    DropdownMenuItem(
-                                        value: '4+ years',
-                                        child: Text('4+ years')),
-                                  ],
-                                  onChanged: (value) => ref
-                                      .read(employmentInfoViewModelProvider
-                                          .notifier)
-                                      .onTimeWithEmployerChanged(value ?? ''),
-                                ),
-
-                                const SizedBox(height: SpacingTokens.space4),
-
-                                AnimatedFieldWidget(
-                                  label: 'My next payday is',
-                                  value: state.nextPayday.value,
-                                  isEditMode: state.isEditMode,
-                                  editWidget: TextFormField(
-                                    initialValue: state.nextPayday.value,
-                                    onChanged: ref
-                                        .read(employmentInfoViewModelProvider
-                                            .notifier)
-                                        .onNextPaydayChanged,
-                                    readOnly: true,
-                                    onTap: () => _selectDate(
-                                        context,
-                                        ref.read(employmentInfoViewModelProvider
-                                            .notifier)),
-                                    decoration: InputDecoration(
-                                      errorText:
-                                          state.nextPayday.displayError != null
-                                              ? 'Please enter your next payday'
-                                              : null,
-                                      suffixIcon:
-                                          const Icon(Icons.calendar_today),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                    height: SpacingTokens
-                                        .space4), // Direct deposit section with AnimatedCrossFade
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                secondChild: Row(
                                   children: [
-                                    Text(
-                                      'Is your pay a direct deposit?',
+                                    Expanded(
+                                      child: DropdownButtonFormField<String>(
+                                        value: _extractYears(state.timeWithEmployer.value),
+                                        decoration: const InputDecoration(
+                                          hintText: 'Years',
+                                        ),
+                                        items: List.generate(10, (index) {
+                                          return DropdownMenuItem(
+                                            value: '$index',
+                                            child: Text('$index ${index == 1 ? 'year' : 'years'}'),
+                                          );
+                                        }),
+                                        onChanged: (years) {
+                                          final months = _extractMonths(state.timeWithEmployer.value);
+                                          _updateTimeWithEmployer(ref, years ?? '0', months);
+                                        },
+                                      ),
+                                    ),
+                                    const SizedBox(width: SpacingTokens.space3),
+                                    Expanded(
+                                      child: DropdownButtonFormField<String>(
+                                        value: _extractMonths(state.timeWithEmployer.value),
+                                        decoration: const InputDecoration(
+                                          hintText: 'Months',
+                                        ),
+                                        items: List.generate(12, (index) {
+                                          return DropdownMenuItem(
+                                            value: '$index',
+                                            child: Text('$index ${index == 1 ? 'month' : 'months'}'),
+                                          );
+                                        }),
+                                        onChanged: (months) {
+                                          final years = _extractYears(state.timeWithEmployer.value);
+                                          _updateTimeWithEmployer(ref, years, months ?? '0');
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(height: SpacingTokens.space4),
+
+                          AnimatedFieldWidget(
+                            label: 'My next payday is',
+                            value: state.nextPayday.value,
+                            isEditMode: state.isEditMode,
+                            editWidget: TextFormField(
+                              controller: TextEditingController(
+                                text: state.nextPayday.value,
+                              ),
+                              readOnly: true,
+                              onTap: () => _selectDate(
+                                  context,
+                                  ref.read(employmentInfoViewModelProvider
+                                      .notifier)),
+                              decoration: InputDecoration(
+                                errorText: state.nextPayday.displayError != null
+                                    ? 'Please enter your next payday'
+                                    : null,
+                                suffixIcon: const Icon(Icons.calendar_today),
+                                hintText: 'Select a date',
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                              height: SpacingTokens
+                                  .space4), // Direct deposit section with AnimatedCrossFade
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Is your pay a direct deposit?',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium
+                                    ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurfaceVariant,
+                                    ),
+                              ),
+                              const SizedBox(height: SpacingTokens.space2),
+                              AnimatedCrossFade(
+                                duration: const Duration(milliseconds: 300),
+                                crossFadeState: state.isEditMode
+                                    ? CrossFadeState.showSecond
+                                    : CrossFadeState.showFirst,
+                                firstChild: SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                      directDeposit == null
+                                          ? 'Not set'
+                                          : directDeposit
+                                              ? 'Yes'
+                                              : 'No',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .labelMedium
-                                          ?.copyWith(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onSurfaceVariant,
-                                          ),
+                                          .bodyLarge),
+                                ),
+                                secondChild: Row(
+                                  children: [
+                                    Radio<bool>(
+                                      value: true,
+                                      groupValue: directDeposit,
+                                      onChanged: (value) => ref
+                                          .read(employmentInfoViewModelProvider
+                                              .notifier)
+                                          .onDirectDepositChanged(
+                                              value ?? false),
                                     ),
-                                    const SizedBox(
-                                        height: SpacingTokens.space2),
-                                    AnimatedCrossFade(
-                                      duration:
-                                          const Duration(milliseconds: 300),
-                                      crossFadeState: state.isEditMode
-                                          ? CrossFadeState.showSecond
-                                          : CrossFadeState.showFirst,
-                                      firstChild: SizedBox(
-                                        width: double.infinity,
-                                        child: Text(
-                                            directDeposit == null
-                                                ? 'Not set'
-                                                : directDeposit
-                                                    ? 'Yes'
-                                                    : 'No',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge),
-                                      ),
-                                      secondChild: Row(
-                                        children: [
-                                          Radio<bool>(
-                                            value: true,
-                                            groupValue: directDeposit,
-                                            onChanged: (value) => ref
-                                                .read(
-                                                    employmentInfoViewModelProvider
-                                                        .notifier)
-                                                .onDirectDepositChanged(
-                                                    value ?? false),
-                                          ),
-                                          const Text('Yes'),
-                                          const SizedBox(
-                                              width: SpacingTokens.space4),
-                                          Radio<bool>(
-                                            value: false,
-                                            groupValue: state.isDirectDeposit,
-                                            onChanged: (value) => ref
-                                                .read(
-                                                    employmentInfoViewModelProvider
-                                                        .notifier)
-                                                .onDirectDepositChanged(
-                                                    value ?? false),
-                                          ),
-                                          const Text('No'),
-                                        ],
-                                      ),
+                                    const Text('Yes'),
+                                    const SizedBox(width: SpacingTokens.space4),
+                                    Radio<bool>(
+                                      value: false,
+                                      groupValue: state.isDirectDeposit,
+                                      onChanged: (value) => ref
+                                          .read(employmentInfoViewModelProvider
+                                              .notifier)
+                                          .onDirectDepositChanged(
+                                              value ?? false),
                                     ),
+                                    const Text('No'),
                                   ],
                                 ),
-                                // Add extra padding at bottom for floating buttons
-                                const SizedBox(height: SpacingTokens.space28),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                          // Add extra padding at bottom for floating buttons
+                          const SizedBox(height: SpacingTokens.space28),
+                        ],
+                      ),
                     ),
                   ),
                   // Floating action buttons positioned at bottom
@@ -521,8 +573,11 @@ class EmploymentInfoPage extends ConsumerWidget {
     );
 
     if (date != null) {
+      final monthName = _getMonthName(date.month);
+      final dayWithSuffix = _getDayWithSuffix(date.day);
+      final dayOfWeek = _getDayOfWeek(date.weekday);
       viewModel.onNextPaydayChanged(
-          'Sept ${date.day}, ${date.year} (${_getDayOfWeek(date.weekday)})');
+          '$monthName $dayWithSuffix, ${date.year} ($dayOfWeek)');
     }
   }
 
@@ -537,5 +592,79 @@ class EmploymentInfoPage extends ConsumerWidget {
       'Sunday'
     ];
     return days[weekday - 1];
+  }
+
+  String _formatAddress(String address) {
+    // Find the first comma and add a newline after it
+    final firstCommaIndex = address.indexOf(',');
+    if (firstCommaIndex != -1 && firstCommaIndex < address.length - 1) {
+      // Add newline after the first comma
+      return '${address.substring(0, firstCommaIndex + 1)}\n${address.substring(firstCommaIndex + 1).trim()}';
+    }
+    return address;
+  }
+
+  String _getMonthName(int month) {
+    const months = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
+    ];
+    return months[month - 1];
+  }
+
+  String _getDayWithSuffix(int day) {
+    String suffix;
+    if (day >= 11 && day <= 13) {
+      suffix = 'th';
+    } else {
+      switch (day % 10) {
+        case 1:
+          suffix = 'st';
+          break;
+        case 2:
+          suffix = 'nd';
+          break;
+        case 3:
+          suffix = 'rd';
+          break;
+        default:
+          suffix = 'th';
+      }
+    }
+    return '$day$suffix';
+  }
+
+  String _extractYears(String timeWithEmployer) {
+    if (timeWithEmployer.isEmpty) return '0';
+    // Try to extract years from strings like "2 years 3 months" or "2 years"
+    final yearsMatch = RegExp(r'(\d+)\s*year').firstMatch(timeWithEmployer);
+    return yearsMatch?.group(1) ?? '0';
+  }
+
+  String _extractMonths(String timeWithEmployer) {
+    if (timeWithEmployer.isEmpty) return '0';
+    // Try to extract months from strings like "2 years 3 months" or "3 months"
+    final monthsMatch = RegExp(r'(\d+)\s*month').firstMatch(timeWithEmployer);
+    return monthsMatch?.group(1) ?? '0';
+  }
+
+  void _updateTimeWithEmployer(WidgetRef ref, String years, String months) {
+    final yearsInt = int.tryParse(years) ?? 0;
+    final monthsInt = int.tryParse(months) ?? 0;
+    
+    String timeText = '';
+    if (yearsInt > 0) {
+      timeText = '$yearsInt ${yearsInt == 1 ? 'year' : 'years'}';
+    }
+    if (monthsInt > 0) {
+      if (timeText.isNotEmpty) timeText += ' ';
+      timeText += '$monthsInt ${monthsInt == 1 ? 'month' : 'months'}';
+    }
+    if (timeText.isEmpty) {
+      timeText = '0 years';
+    }
+    
+    ref.read(employmentInfoViewModelProvider.notifier)
+        .onTimeWithEmployerChanged(timeText);
   }
 }

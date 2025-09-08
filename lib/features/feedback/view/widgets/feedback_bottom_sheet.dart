@@ -10,7 +10,6 @@ class FeedbackBottomSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(feedbackViewModelProvider);
-    final viewModel = ref.read(feedbackViewModelProvider.notifier);
 
     return Container(
       padding: EdgeInsets.only(
@@ -42,7 +41,8 @@ class FeedbackBottomSheet extends ConsumerWidget {
             ),
             child: TextFormField(
               initialValue: state.message,
-              onChanged: viewModel.onMessageChanged,
+              onChanged:
+                  ref.read(feedbackViewModelProvider.notifier).onMessageChanged,
               maxLines: 10,
               decoration: const InputDecoration(
                 hintText: 'Tell us about your experience...',
@@ -59,15 +59,19 @@ class FeedbackBottomSheet extends ConsumerWidget {
           SizedBox(
             height: 56,
             child: ElevatedButton(
-              onPressed: state.status == FormzSubmissionStatus.inProgress || !state.isValid
+              onPressed: state.status == FormzSubmissionStatus.inProgress ||
+                      !state.isValid
                   ? null
                   : () async {
-                      final success = await viewModel.submit();
+                      final success = await ref
+                          .read(feedbackViewModelProvider.notifier)
+                          .submit();
                       if (context.mounted) {
                         if (success) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: const Text('Thank you for your feedback!'),
+                              content:
+                                  const Text('Thank you for your feedback!'),
                               backgroundColor:
                                   Theme.of(context).colorScheme.inverseSurface,
                               behavior: SnackBarBehavior.floating,
@@ -77,7 +81,8 @@ class FeedbackBottomSheet extends ConsumerWidget {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(state.error!),
-                              backgroundColor: Theme.of(context).colorScheme.error,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.error,
                               behavior: SnackBarBehavior.floating,
                             ),
                           );

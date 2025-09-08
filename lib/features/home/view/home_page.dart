@@ -17,7 +17,6 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final homeState = ref.watch(homeViewModelProvider);
-    final viewModel = ref.read(homeViewModelProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -40,7 +39,7 @@ class HomePage extends ConsumerWidget {
       ),
       body: switch (homeState) {
         AsyncData(:final value) => RefreshIndicator(
-            onRefresh: () => viewModel.refresh(),
+            onRefresh: () => ref.read(homeViewModelProvider.notifier).refresh(),
             child: CustomScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
@@ -74,7 +73,6 @@ class HomePage extends ConsumerWidget {
           ),
         AsyncError(:final error) => HomeErrorStateWidget(
             errorMessage: error.toString(),
-            viewModel: viewModel,
           ),
         AsyncLoading() => const LoadingStateWidget(),
       },

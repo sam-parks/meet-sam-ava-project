@@ -6,6 +6,7 @@ class AnimatedFieldWidget extends StatelessWidget {
   final String value;
   final bool isEditMode;
   final Widget editWidget;
+  final Widget? displayWidget;
   final Duration duration;
 
   const AnimatedFieldWidget({
@@ -13,6 +14,7 @@ class AnimatedFieldWidget extends StatelessWidget {
     required this.value,
     required this.isEditMode,
     required this.editWidget,
+    this.displayWidget,
     this.duration = const Duration(milliseconds: 300),
     super.key,
   });
@@ -33,17 +35,22 @@ class AnimatedFieldWidget extends StatelessWidget {
           duration: duration,
           crossFadeState:
               isEditMode ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-          firstChild: SizedBox(
-            width: double.infinity,
-            child: Text(
-              value.isEmpty ? 'Not set' : value,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: value.isEmpty
-                        ? Theme.of(context).colorScheme.onSurfaceVariant
-                        : null,
+          firstChild: displayWidget != null 
+              ? SizedBox(
+                  width: double.infinity,
+                  child: displayWidget,
+                )
+              : SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    value.isEmpty ? 'Not set' : value,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: value.isEmpty
+                              ? Theme.of(context).colorScheme.onSurfaceVariant
+                              : null,
+                        ),
                   ),
-            ),
-          ),
+                ),
           secondChild: editWidget,
         ),
       ],

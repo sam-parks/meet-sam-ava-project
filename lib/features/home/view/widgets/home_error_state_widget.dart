@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meet_sam_ava/features/home/vm/home_view_model.dart';
 import 'package:meet_sam_ava/core/theme/tokens/spacing_tokens.dart';
 
-class HomeErrorStateWidget extends StatelessWidget {
+class HomeErrorStateWidget extends ConsumerWidget {
   final String? errorMessage;
-  final HomeViewModel viewModel;
 
   const HomeErrorStateWidget({
     required this.errorMessage,
-    required this.viewModel,
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(SpacingTokens.space4),
@@ -40,7 +39,8 @@ class HomeErrorStateWidget extends StatelessWidget {
             ),
             const SizedBox(height: SpacingTokens.space4),
             ElevatedButton(
-              onPressed: () => viewModel.refresh(),
+              onPressed: () =>
+                  ref.read(homeViewModelProvider.notifier).refresh(),
               child: const Text('Try Again'),
             ),
           ],

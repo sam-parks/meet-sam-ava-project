@@ -97,7 +97,7 @@ class EmploymentInfoViewModel extends _$EmploymentInfoViewModel {
   @override
   Future<EmploymentInfoState> build() async {
     // Load data on initialization
-    final repository = ref.read(employmentInfoRepositoryProvider);
+    final repository = ref.watch(employmentInfoRepositoryProvider);
     final result = await repository.getEmploymentInfo();
 
     return result.fold(
@@ -221,15 +221,18 @@ class EmploymentInfoViewModel extends _$EmploymentInfoViewModel {
         final valid = currentState.isValid;
         if (!valid) {
           state = AsyncData(currentState.copyWith(
-            employmentType: EmploymentTypeInput.dirty(currentState.employmentType.value),
+            employmentType:
+                EmploymentTypeInput.dirty(currentState.employmentType.value),
             employer: EmployerInput.dirty(currentState.employer.value),
             jobTitle: JobTitleInput.dirty(currentState.jobTitle.value),
-            grossAnnualIncome: IncomeInput.dirty(currentState.grossAnnualIncome.value),
-            payFrequency: PayFrequencyInput.dirty(currentState.payFrequency.value),
+            grossAnnualIncome:
+                IncomeInput.dirty(currentState.grossAnnualIncome.value),
+            payFrequency:
+                PayFrequencyInput.dirty(currentState.payFrequency.value),
             address: AddressInput.dirty(currentState.address.value),
             nextPayday: NextPaydayInput.dirty(currentState.nextPayday.value),
-            timeWithEmployer:
-                TimeWithEmployerInput.dirty(currentState.timeWithEmployer.value),
+            timeWithEmployer: TimeWithEmployerInput.dirty(
+                currentState.timeWithEmployer.value),
           ));
           return false;
         }
@@ -239,8 +242,9 @@ class EmploymentInfoViewModel extends _$EmploymentInfoViewModel {
           error: null,
         ));
 
-        final repository = ref.read(employmentInfoRepositoryProvider);
-        final result = await repository.saveEmploymentInfo(currentState.employmentData);
+        final repository = ref.watch(employmentInfoRepositoryProvider);
+        final result =
+            await repository.saveEmploymentInfo(currentState.employmentData);
 
         return result.fold(
           (error) {

@@ -31,11 +31,7 @@ class _MyAppState extends ConsumerState<MyApp> {
       ),
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: themeMode == ThemeMode.system
-          ? ThemeMode.system
-          : themeMode == ThemeMode.dark
-              ? ThemeMode.dark
-              : ThemeMode.light,
+      themeMode: themeMode,
     );
   }
 }
