@@ -21,7 +21,7 @@ class AccountDetailsCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: SpacingTokens.space1),
+          padding: const EdgeInsets.only(left: SpacingTokens.space3),
           child: Text(
             'Account details',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -29,7 +29,7 @@ class AccountDetailsCard extends StatelessWidget {
                 ),
           ),
         ),
-        const SizedBox(height: SpacingTokens.space5),
+        const SizedBox(height: SpacingTokens.space3),
         Card(
           child: Padding(
             padding: const EdgeInsets.all(SpacingTokens.space5),
@@ -41,7 +41,8 @@ class AccountDetailsCard extends StatelessWidget {
                   maxValue: accountDetails.spendLimitValue,
                   currentValueLabel: '\$${accountDetails.currentSpend.toInt()}',
                   maxValueLabel: accountDetails.spendLimit,
-                  backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+                  backgroundColor:
+                      Theme.of(context).colorScheme.secondaryContainer,
                 ),
                 const SizedBox(height: SpacingTokens.space5),
                 // Balance and Credit Limit

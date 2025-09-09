@@ -101,7 +101,8 @@ class _AnimatedCreditScoreLineChartState
                     getTitlesWidget: (value, meta) {
                       return Text(
                         value.toInt().toString(),
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
                               color: Theme.of(context)
                                   .colorScheme
                                   .onSurfaceVariant,

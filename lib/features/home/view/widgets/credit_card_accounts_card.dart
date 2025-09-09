@@ -23,7 +23,7 @@ class CreditCardAccountsCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: SpacingTokens.space1),
+          padding: const EdgeInsets.only(left: SpacingTokens.space3),
           child: Text(
             'Open credit card accounts',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -31,7 +31,7 @@ class CreditCardAccountsCard extends StatelessWidget {
                 ),
           ),
         ),
-        const SizedBox(height: SpacingTokens.space5),
+        const SizedBox(height: SpacingTokens.space3),
         Card(
           child: Padding(
             padding: const EdgeInsets.all(SpacingTokens.space5),

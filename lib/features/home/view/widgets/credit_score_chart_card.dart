@@ -21,7 +21,7 @@ class CreditScoreChartCard extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(
-            left: SpacingTokens.space1,
+            left: SpacingTokens.space3,
           ),
           child: Text(
             'Chart',

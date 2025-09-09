@@ -18,7 +18,7 @@ class CreditFactorsCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: SpacingTokens.space1),
+          padding: const EdgeInsets.only(left: SpacingTokens.space3),
           child: Text(
             'Credit factors',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -26,7 +26,7 @@ class CreditFactorsCard extends StatelessWidget {
                 ),
           ),
         ),
-        const SizedBox(height: SpacingTokens.space4),
+        const SizedBox(height: SpacingTokens.space2),
         SizedBox(
           height: 180,
           child: ListView.builder(
