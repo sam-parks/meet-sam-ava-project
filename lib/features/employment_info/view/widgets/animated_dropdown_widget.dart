@@ -26,9 +26,7 @@ class AnimatedDropdownWidget extends StatelessWidget {
       children: [
         Text(
           label,
-          style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
+          style: Theme.of(context).textTheme.labelLarge,
         ),
         const SizedBox(height: SpacingTokens.space2),
         AnimatedCrossFade(

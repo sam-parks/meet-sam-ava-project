@@ -90,7 +90,7 @@ class TotalBalanceCard extends StatelessWidget {
                     child: Column(
                       children: [
                         // Show rating label if Excellent (0-9%) or Good (10-29%) is active
-                        if (_isRangeActive(0, 9, utilizationPercentage) || 
+                        if (_isRangeActive(0, 9, utilizationPercentage) ||
                             _isRangeActive(10, 29, utilizationPercentage))
                           Text(
                             ratingLabel,
@@ -154,7 +154,7 @@ class TotalBalanceCard extends StatelessWidget {
                     child: Column(
                       children: [
                         // Show rating label if Needs Work (50-74%) or Poor (75%+) is active
-                        if (_isRangeActive(50, 74, utilizationPercentage) || 
+                        if (_isRangeActive(50, 74, utilizationPercentage) ||
                             _isRangeActive(75, 100, utilizationPercentage))
                           Text(
                             ratingLabel,

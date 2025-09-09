@@ -109,6 +109,7 @@ ThemeData appTheme(Ref ref) {
         ),
         side: const BorderSide(
           color: ColorTokens.primary,
+           width: 2,
         ),
       ),
     ),

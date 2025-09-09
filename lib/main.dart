@@ -23,7 +23,6 @@ class _MyAppState extends ConsumerState<MyApp> {
     final theme = ref.watch(appThemeProvider);
 
     return MaterialApp.router(
-      title: 'MVVM + Riverpod 3 + AutoRoute + Formz',
       routerConfig: router.config(
         navigatorObservers: () => [AutoRouteObserver()],
       ),

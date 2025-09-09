@@ -219,7 +219,7 @@ class EmploymentInfoPage extends ConsumerWidget {
                                   .read(
                                       employmentInfoViewModelProvider.notifier)
                                   .onAddressChanged,
-                              maxLines: 3,
+                              maxLines: 2,
                               decoration: InputDecoration(
                                 errorText: state.address.displayError != null
                                     ? 'Please enter a valid address'
@@ -256,14 +256,7 @@ class EmploymentInfoPage extends ConsumerWidget {
                             children: [
                               Text(
                                 'Time with employer',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium
-                                    ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSurfaceVariant,
-                                    ),
+                                style: Theme.of(context).textTheme.labelLarge,
                               ),
                               const SizedBox(height: SpacingTokens.space2),
                               AnimatedCrossFade(
@@ -375,14 +368,7 @@ class EmploymentInfoPage extends ConsumerWidget {
                             children: [
                               Text(
                                 'Is your pay a direct deposit?',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium
-                                    ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSurfaceVariant,
-                                    ),
+                                style: Theme.of(context).textTheme.labelLarge,
                               ),
                               const SizedBox(height: SpacingTokens.space2),
                               AnimatedCrossFade(
@@ -414,7 +400,8 @@ class EmploymentInfoPage extends ConsumerWidget {
                                               value ?? false),
                                     ),
                                     const Text('Yes'),
-                                    const SizedBox(width: SpacingTokens.space4),
+                                    const SizedBox(
+                                        width: SpacingTokens.space16),
                                     Radio<bool>(
                                       value: false,
                                       groupValue: state.isDirectDeposit,

@@ -26,16 +26,14 @@ class AnimatedFieldWidget extends StatelessWidget {
       children: [
         Text(
           label,
-          style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
+          style: Theme.of(context).textTheme.labelLarge,
         ),
         const SizedBox(height: SpacingTokens.space2),
         AnimatedCrossFade(
           duration: duration,
           crossFadeState:
               isEditMode ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-          firstChild: displayWidget != null 
+          firstChild: displayWidget != null
               ? SizedBox(
                   width: double.infinity,
                   child: displayWidget,

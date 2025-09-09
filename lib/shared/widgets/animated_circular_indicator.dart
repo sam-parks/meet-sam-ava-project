@@ -15,7 +15,7 @@ class AnimatedCircularIndicator extends StatefulWidget {
   final Duration animationDuration;
   final TextStyle? textStyle;
   final TextStyle? subTextStyle;
-  
+
   const AnimatedCircularIndicator({
     required this.value,
     required this.maxValue,
@@ -32,7 +32,8 @@ class AnimatedCircularIndicator extends StatefulWidget {
   });
 
   @override
-  State<AnimatedCircularIndicator> createState() => _AnimatedCircularIndicatorState();
+  State<AnimatedCircularIndicator> createState() =>
+      _AnimatedCircularIndicatorState();
 }
 
 class _AnimatedCircularIndicatorState extends State<AnimatedCircularIndicator>
@@ -48,13 +49,13 @@ class _AnimatedCircularIndicatorState extends State<AnimatedCircularIndicator>
       duration: widget.animationDuration,
       vsync: this,
     );
-    
+
     _setupAnimation();
   }
-  
+
   void _setupAnimation() {
     final progress = widget.value / widget.maxValue;
-    
+
     _animation = Tween<double>(
       begin: 0,
       end: progress,
@@ -63,7 +64,7 @@ class _AnimatedCircularIndicatorState extends State<AnimatedCircularIndicator>
       curve: Curves.easeInOut,
     ));
   }
-  
+
   void _onVisibilityChanged(VisibilityInfo info) {
     if (!_hasAnimated && info.visibleFraction > 0) {
       _hasAnimated = true;
@@ -80,7 +81,8 @@ class _AnimatedCircularIndicatorState extends State<AnimatedCircularIndicator>
   @override
   void didUpdateWidget(AnimatedCircularIndicator oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.value != widget.value || oldWidget.maxValue != widget.maxValue) {
+    if (oldWidget.value != widget.value ||
+        oldWidget.maxValue != widget.maxValue) {
       _controller.reset();
       _setupAnimation();
       if (_hasAnimated) {
@@ -101,42 +103,53 @@ class _AnimatedCircularIndicatorState extends State<AnimatedCircularIndicator>
           animation: _animation,
           builder: (context, child) {
             return CustomPaint(
-            painter: _CircleProgressPainter(
-              progress: _animation.value,
-              strokeWidth: widget.strokeWidth,
-              backgroundColor: widget.backgroundColor ?? 
-                  Theme.of(context).colorScheme.secondaryContainer,
-              progressColor: widget.progressColor ?? 
-                  Theme.of(context).colorScheme.secondary,
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    widget.displayText,
-                    style: widget.textStyle ?? 
-                        TypographyTokens.headlineLargeCondensed.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface,
-                          fontSize: widget.size > 80 ? 34 : 28,
-                        ),
-                  ),
-                  if (widget.subText != null)
-                    Text(
-                      widget.subText!,
-                      style: widget.subTextStyle ??
-                          Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: widget.progressColor ?? 
-                                Theme.of(context).colorScheme.secondary,
-                            fontWeight: FontWeight.w600,
-                          ),
-                      textAlign: TextAlign.center,
-                    ),
-                ],
+              painter: _CircleProgressPainter(
+                progress: _animation.value,
+                strokeWidth: widget.strokeWidth,
+                backgroundColor: widget.backgroundColor ??
+                    Theme.of(context).colorScheme.secondaryContainer,
+                progressColor: widget.progressColor ??
+                    Theme.of(context).colorScheme.secondary,
               ),
-            ),
-          );
-        },
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          widget.displayText,
+                          style: widget.textStyle ??
+                              TypographyTokens.headlineLargeCondensed.copyWith(
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontSize: widget.size > 80 ? 40 : 28,
+                              ),
+                        ),
+                      ),
+                    ),
+                    if (widget.subText != null)
+                      Flexible(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            widget.subText!,
+                            style: widget.subTextStyle ??
+                                Theme.of(context).textTheme.labelSmall?.copyWith(
+                                      color: widget.progressColor ??
+                                          Theme.of(context).colorScheme.secondary,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
@@ -160,26 +173,26 @@ class _CircleProgressPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = (size.width - strokeWidth) / 2;
-    
+
     // Draw background circle
     final backgroundPaint = Paint()
       ..color = backgroundColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
       ..strokeCap = StrokeCap.round;
-    
+
     canvas.drawCircle(center, radius, backgroundPaint);
-    
+
     // Draw progress arc
     final progressPaint = Paint()
       ..color = progressColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
       ..strokeCap = StrokeCap.round;
-    
+
     // Start from top (-pi/2) and sweep based on progress
     final sweepAngle = 2 * math.pi * progress;
-    
+
     canvas.drawArc(
       Rect.fromCircle(center: center, radius: radius),
       -math.pi / 2,
