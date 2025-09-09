@@ -170,6 +170,10 @@ This project follows the **MVVM (Model-View-ViewModel)** pattern with clean arch
 
 ## 🧪 Testing
 
+### Comprehensive Test Suite
+
+The project includes a complete testing framework with 46+ tests covering all aspects of the application:
+
 Run all tests:
 
 ```bash
@@ -179,17 +183,41 @@ flutter test
 Run specific test categories:
 
 ```bash
-# Unit tests
+# Unit tests (32 tests) - View models, repositories, business logic
 flutter test test/unit/
 
-# View model tests
-flutter test test/unit/features/*/vm/
+# Integration tests (7 tests) - Full app functionality and provider state management  
+flutter test test/integration/
 
-# Repository tests
-flutter test test/unit/features/*/repositories/
+# UI/Widget tests (8+ tests) - UI components, error states, user interactions
+flutter test test/ui/
 ```
 
-For detailed testing documentation, see [TESTING.md](TESTING.md)
+### Detailed Test Categories
+
+```bash
+# View model tests - State management and business logic
+flutter test test/unit/features/*/vm/
+
+# Repository tests - Data layer with network delays and error handling
+flutter test test/unit/features/*/repositories/
+
+# Widget tests - UI components with success/error states
+flutter test test/ui/widgets/
+
+# Error state tests - Comprehensive error handling scenarios
+flutter test test/ui/features/*/
+```
+
+### Test Coverage
+
+- **View Models**: HomeViewModel, EmploymentInfoViewModel with state management
+- **Repositories**: MockCreditScoreRepository with network simulation and data consistency
+- **UI Components**: AnimatedCircularIndicator with animations, layouts, and edge cases  
+- **Error States**: HomePage with error/success scenarios and mixed states
+- **Integration**: Full app lifecycle, provider management, and memory leak prevention
+
+All tests pass reliably with proper async handling, timer management, and layout overflow prevention.
 
 ## 🛠️ Development
 
