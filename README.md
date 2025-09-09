@@ -1,7 +1,5 @@
 # Ava meet Sam! 👋
 
-Welcome to the Meet Sam Ava project - a modern Flutter application showcasing credit score management and financial tracking with a clean, intuitive interface.
-
 ## 🚀 Getting Started
 
 ### Prerequisites
